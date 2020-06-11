@@ -1,0 +1,11 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs/Station/v16/Server/sqlite3
+/.vs/Station
+/Station.Common/obj
+/Station.Entities/bin/Debug/netcoreapp3.1
+/Station.Entities/obj
+/Station.Repositories/obj
+/Station.WebApi/obj
