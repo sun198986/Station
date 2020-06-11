@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7_Migrations", "7_Migration
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8_Config", "8_Config", "{ED0BEBEA-2C74-47D6-BB33-40551FAE3B33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.Entities", "Station.Entities\Station.Entities.csproj", "{54025C27-735F-4B40-BCCC-55348B0A4D7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.Entities", "Station.Entities\Station.Entities.csproj", "{54025C27-735F-4B40-BCCC-55348B0A4D7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.Repositories", "Station.Repositories\Station.Repositories.csproj", "{8D881F2B-11C2-4ED1-B304-C9B58D2DCCF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.Repositories", "Station.Repositories\Station.Repositories.csproj", "{8D881F2B-11C2-4ED1-B304-C9B58D2DCCF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.WebApi", "Station.WebApi\Station.WebApi.csproj", "{65C32B44-DA8D-4630-8BBF-5018CCB4CF46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.WebApi", "Station.WebApi\Station.WebApi.csproj", "{65C32B44-DA8D-4630-8BBF-5018CCB4CF46}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9_Common", "9_Common", "{0B90B733-E298-4E53-AA6D-0AB1E4F9488F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.Common", "Station.Common\Station.Common.csproj", "{ADB7BF66-DE71-4D82-B526-00E7FA912ABB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.Common", "Station.Common\Station.Common.csproj", "{ADB7BF66-DE71-4D82-B526-00E7FA912ABB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

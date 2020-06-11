@@ -9,8 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Station.Repositories.StaionRegist;
 using Station.Repositories.StaionRegist.Implementation;
-using Station.Repositories.StaionRegist.Interface;
 
 namespace Station.WebApi
 {

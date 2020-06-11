@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Station.Entities.DB2Admin;
 
-namespace Station.Repositories.StaionRegist.Interface
+namespace Station.Repositories.StaionRegist
 {
     public interface IRegistRepository
     {
