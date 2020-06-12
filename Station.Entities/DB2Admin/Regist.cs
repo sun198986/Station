@@ -8,7 +8,7 @@ namespace Station.Entities.DB2Admin
     [Table("Regist")]
     public class Regist
     {
-        public string RegistID { set; get; }
+        public string RegistId { set; get; }
         
         public DateTime RegistDate { set; get; }
         

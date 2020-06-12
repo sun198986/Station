@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Station.Entities.DB2Admin;
-using Station.Repositories.StaionRegist.Interface;
 
 namespace Station.Repositories.StaionRegist.Implementation
 {
