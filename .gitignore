@@ -10,3 +10,8 @@
 /Station.Repositories/obj
 /Station.WebApi/obj
 /Station.Models/obj
+/Station.Businesses/bin/Debug/netcoreapp3.1
+/Station.Businesses/obj
+/Station.Common/bin/Debug/netcoreapp3.1
+/Station.Repositories/bin/Debug/netcoreapp3.1
+/Station.WebApi/bin/Debug/netcoreapp3.1
