@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Station.Businesses.StaionRegist;
 using Station.Businesses.StaionRegist.Implementation;
+using Station.Entities.DB2Admin;
 using Station.Repositories.StaionRegist;
 using Station.Repositories.StaionRegist.Implementation;
 
@@ -30,8 +31,10 @@ namespace Station.WebApi
         {
             services.AddControllers();
 
+            services.AddDbContext<Db2AdminDbContext>();
             services.AddTransient<IRegistRepository, RegistRepository>();
             services.AddTransient<IRegistBusiness, RegistBusiness>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

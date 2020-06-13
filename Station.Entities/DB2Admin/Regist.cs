@@ -5,7 +5,7 @@ using Station.Common;
 
 namespace Station.Entities.DB2Admin
 {
-    [Table("Regist")]
+    [Table("DB2Admin.Regist")]
     public class Regist
     {
         public string RegistId { set; get; }
