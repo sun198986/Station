@@ -12,7 +12,11 @@ namespace Station.Entities.DB2Admin
 
             });
         }
-
+        /// <summary>
+        /// 维修注册
+        /// </summary>
         public DbSet<Regist> Regists { get; set; }
+
+
     }
 }
