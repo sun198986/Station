@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Station.Business.StaionRegist;
-using Station.Business.StaionRegist.Implementation;
 using Station.Entity.DB2Admin;
 using Station.Repository.StaionRegist;
 using Station.Repository.StaionRegist.Implementation;
@@ -27,7 +25,6 @@ namespace Station.WebApi
 
             services.AddDbContext<Db2AdminDbContext>();
             services.AddTransient<IRegistRepository, RegistRepository>();
-            services.AddTransient<IRegistBusiness, RegistBusiness>();
             
         }
 

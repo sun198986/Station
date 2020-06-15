@@ -8,8 +8,6 @@
 /Station.WebApi/obj
 /Station.Common/bin/Debug/netcoreapp3.1
 /Station.WebApi/bin/Debug/netcoreapp3.1
-/Station.Business/bin/Debug/netcoreapp3.1
-/Station.Business/obj
 /Station.Entity/bin/Debug/netcoreapp3.1
 /Station.Entity/obj
 /Station.Repository/obj

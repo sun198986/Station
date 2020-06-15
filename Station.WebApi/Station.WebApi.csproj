@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Station.Business\Station.Business.csproj" />
     <ProjectReference Include="..\Station.Entity\Station.Entity.csproj" />
     <ProjectReference Include="..\Station.Repository\Station.Repository.csproj" />
   </ItemGroup>
