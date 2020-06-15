@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Station.Entities.DB2Admin;
+using Station.Entity.DB2Admin;
 
-namespace Station.Repositories.StaionRegist.Implementation
+namespace Station.Repository.StaionRegist.Implementation
 {
     public class RegistRepository:IRegistRepository
     {

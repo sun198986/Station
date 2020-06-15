@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Station.Common;
 
-namespace Station.Entities.DB2Admin
+namespace Station.Entity.DB2Admin
 {
     [Table("DB2Admin.Regist")]
     public class Regist

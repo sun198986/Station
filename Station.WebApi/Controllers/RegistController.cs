@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Station.Businesses.StaionRegist;
+using Station.Business.StaionRegist;
 
 namespace Station.WebApi.Controllers
 {
     [ApiController]
     [Route("api/regist")]
-    public class RegistController:ControllerBase
+    public class RegistController : ControllerBase
     {
         private readonly IRegistBusiness _registBusiness;
 

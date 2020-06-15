@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Station.Entities.DB2Admin;
+using Station.Entity.DB2Admin;
 
-namespace Station.Businesses.StaionRegist
+namespace Station.Repository.StaionRegist
 {
-    public interface IRegistBusiness
+    public interface IRegistRepository
     {
         Task<IList<Regist>> GetRegistsAsync();
     }

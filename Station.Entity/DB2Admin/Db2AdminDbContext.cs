@@ -1,7 +1,7 @@
 ﻿using IBM.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Station.Entities.DB2Admin
+namespace Station.Entity.DB2Admin
 {
     public class Db2AdminDbContext : DbContext
     {

@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Station.Businesses.StaionRegist;
-using Station.Businesses.StaionRegist.Implementation;
-using Station.Entities.DB2Admin;
-using Station.Repositories.StaionRegist;
-using Station.Repositories.StaionRegist.Implementation;
+using Station.Business.StaionRegist;
+using Station.Business.StaionRegist.Implementation;
+using Station.Entity.DB2Admin;
+using Station.Repository.StaionRegist;
+using Station.Repository.StaionRegist.Implementation;
 
 namespace Station.WebApi
 {

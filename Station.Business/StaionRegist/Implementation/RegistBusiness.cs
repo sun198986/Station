@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Station.Entities.DB2Admin;
-using Station.Repositories.StaionRegist;
+using Station.Entity.DB2Admin;
+using Station.Repository.StaionRegist;
 
-namespace Station.Businesses.StaionRegist.Implementation
+namespace Station.Business.StaionRegist.Implementation
 {
     public class RegistBusiness:IRegistBusiness
     {
