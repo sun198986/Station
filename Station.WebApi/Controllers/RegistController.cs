@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Station.Entity.DB2Admin;
+using Station.Helper;
 using Station.Models.RegistDto;
 using Station.Repository.StaionRegist;
 
@@ -26,9 +28,30 @@ namespace Station.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRegists()
         {
-            var list = await _registRepository.GetRegistsAsync();
-            _mapper.Map<IEnumerable<RegistDto>>(list);
-            return Ok(list);
+            var entities = await _registRepository.GetRegistsAsync();
+            var listDto =_mapper.Map<IEnumerable<RegistDto>>(entities);
+            return Ok(listDto.ShapeData("RegistId"));
+
+        }
+
+        [HttpGet("{ids}", Name = nameof(GetCompanyCollection))]
+        public async Task<IActionResult> GetCompanyCollection(
+            [FromRoute]
+            [ModelBinder(BinderType = typeof(ArrayModelBinder))]
+            IEnumerable<string> ids)
+        {
+            if (ids == null)
+                return BadRequest();
+
+            var entities = await _registRepository.GetRegistsAsync(ids);
+
+            if (ids.Count() != entities.Count())
+            {
+                return NotFound();
+            }
+
+            var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
+            return Ok(listDto.ShapeData("RegistId"));
         }
     }
 }
