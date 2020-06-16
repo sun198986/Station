@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -28,7 +29,8 @@ namespace Station.WebApi
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(CustomerExceptionFilterAttribute));//全局异常处理
-            });
+            })
+            .AddXmlDataContractSerializerFormatters();//支持xml处理
 
             services.AddDbContext<Db2AdminDbContext>();
             services.AddTransient<IRegistRepository, RegistRepository>();

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +27,11 @@ namespace Station.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRegists()
+        public async Task<IActionResult> GetRegists([FromQuery] string fields)
         {
             var entities = await _registRepository.GetRegistsAsync();
             var listDto =_mapper.Map<IEnumerable<RegistDto>>(entities);
-            return Ok(listDto.ShapeData("RegistId"));
+            return Ok(listDto.ShapeData(fields));
 
         }
 
@@ -38,7 +39,7 @@ namespace Station.WebApi.Controllers
         public async Task<IActionResult> GetCompanyCollection(
             [FromRoute]
             [ModelBinder(BinderType = typeof(ArrayModelBinder))]
-            IEnumerable<string> ids)
+            IEnumerable<string> ids, [FromQuery] string fields)
         {
             if (ids == null)
                 return BadRequest();
@@ -46,12 +47,13 @@ namespace Station.WebApi.Controllers
             var entities = await _registRepository.GetRegistsAsync(ids);
 
             if (ids.Count() != entities.Count())
-            {
-                return NotFound();
+            { 
+                List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
+                return NotFound(JsonSerializer.Serialize(idNotFounds));
             }
 
             var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
-            return Ok(listDto.ShapeData("RegistId"));
+            return Ok(listDto.ShapeData(fields));
         }
     }
 }
