@@ -11,7 +11,6 @@ namespace Station.Aop.Filter
     {
         public override void OnException(ExceptionContext context)
         {
-
             if (!context.ExceptionHandled)
             {
                 Console.WriteLine($"{context.Exception.Message}");

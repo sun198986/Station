@@ -7,10 +7,13 @@ namespace Station.Models.RegistDto
     {
         public RegistProfile()
         {
-            CreateMap<Regist, RegistDto>();
+            CreateMap<Regist, RegistDto>()
+            .ForMember(dest => dest.TelPhone,
+            opt => opt.MapFrom(src => src.Phone));
 
-            //.ForMember(dest => dest.CompanyName,
-            //opt => opt.MapFrom(src => src.Name));
+            CreateMap<RegistAddDto, Regist>()
+                .ForMember(dest => dest.Phone,
+                    opt => opt.MapFrom(src => src.TelPhone));
         }
     }
 }

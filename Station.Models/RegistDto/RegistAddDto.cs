@@ -2,10 +2,8 @@
 
 namespace Station.Models.RegistDto
 {
-    public class RegistDto
+    public class RegistAddDto
     {
-        public string RegistId { set; get; }
-
         public DateTime RegistDate { set; get; }
 
         public string MaintainNumber { set; get; }

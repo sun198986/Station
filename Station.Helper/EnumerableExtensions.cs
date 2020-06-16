@@ -9,7 +9,7 @@ namespace Station.Helper
     public static class EnumerableExtensions
     {
         public static IEnumerable<ExpandoObject> ShapeData<TSource>(
-            this IEnumerable<TSource> source, string fields)
+            this IEnumerable<TSource> source, string fields="")
         {
             if (source == null)
             {
@@ -36,7 +36,7 @@ namespace Station.Helper
 
                     if (propertyInfo == null)
                     {
-                        throw new Exception($"Property:{propertyName}没有找到:{typeof(TSource)}");
+                        throw new KeyNotFoundException($"Property:{propertyName}没有找到:{typeof(TSource)}");
                     }
                     propertyInfoList.Add(propertyInfo);
                 }

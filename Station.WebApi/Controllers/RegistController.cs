@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -35,8 +34,8 @@ namespace Station.WebApi.Controllers
 
         }
 
-        [HttpGet("{ids}", Name = nameof(GetCompanyCollection))]
-        public async Task<IActionResult> GetCompanyCollection(
+        [HttpGet("{ids}", Name = nameof(GetRegistCollection))]
+        public async Task<IActionResult> GetRegistCollection(
             [FromRoute]
             [ModelBinder(BinderType = typeof(ArrayModelBinder))]
             IEnumerable<string> ids, [FromQuery] string fields)
@@ -54,6 +53,21 @@ namespace Station.WebApi.Controllers
 
             var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
             return Ok(listDto.ShapeData(fields));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddReigst(RegistAddDto regist)
+        {
+            if(regist==null)
+                throw new ArgumentNullException(nameof(regist));
+
+            var entity =  _mapper.Map<Regist>(regist);
+            _registRepository.AddRegist(entity);
+            await _registRepository.SaveAsync();//异步问题待解决
+
+            var returnDto = _mapper.Map<RegistDto>(entity);
+            return CreatedAtRoute(nameof(GetRegistCollection), new {ids = returnDto.RegistId}, returnDto);
+
         }
     }
 }

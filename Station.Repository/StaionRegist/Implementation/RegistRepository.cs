@@ -33,5 +33,23 @@ namespace Station.Repository.StaionRegist.Implementation
                 .OrderBy(x => x.RegistId)
                 .ToListAsync();
         }
+
+        public void AddRegist(Regist regist)
+        {
+            if (regist == null)
+            {
+                throw new ArgumentNullException(nameof(regist));
+            }
+
+            regist.RegistId = Guid.NewGuid().ToString();
+
+            _db2AdminDbContext.Regists.Add(regist);
+        }
+
+
+        public async Task<bool> SaveAsync()
+        {
+            return await _db2AdminDbContext.SaveChangesAsync() >= 0;
+        }
     }
 }
