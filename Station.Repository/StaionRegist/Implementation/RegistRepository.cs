@@ -9,16 +9,16 @@ namespace Station.Repository.StaionRegist.Implementation
 {
     public class RegistRepository:IRegistRepository
     {
-        private readonly Db2AdminDbContext _db2AdminDbContext;
+        private readonly Db2AdminDbContext _context;
 
-        public RegistRepository(Db2AdminDbContext db2AdminDbContext)
+        public RegistRepository(Db2AdminDbContext context)
         {
-            _db2AdminDbContext = db2AdminDbContext;
+            _context = context;
         }
 
         public async Task<IEnumerable<Regist>> GetRegistsAsync()
         {
-            var list = await _db2AdminDbContext.Regists.ToListAsync();
+            var list = await _context.Regists.ToListAsync();
             return list;
         }
 
@@ -28,7 +28,7 @@ namespace Station.Repository.StaionRegist.Implementation
             {
                 throw new ArgumentNullException(nameof(registIds));
             }
-            return await _db2AdminDbContext.Regists
+            return await _context.Regists
                 .Where(x => registIds.Contains(x.RegistId))
                 .OrderBy(x => x.RegistId)
                 .ToListAsync();
@@ -43,13 +43,13 @@ namespace Station.Repository.StaionRegist.Implementation
 
             regist.RegistId = Guid.NewGuid().ToString();
 
-            _db2AdminDbContext.Regists.Add(regist);
+            _context.Regists.Add(regist);
         }
 
 
         public async Task<bool> SaveAsync()
         {
-            return await _db2AdminDbContext.SaveChangesAsync() >= 0;
+            return await _context.SaveChangesAsync() >= 0;
         }
     }
 }
