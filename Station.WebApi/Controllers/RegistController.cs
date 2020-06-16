@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,7 @@ namespace Station.WebApi.Controllers
         public async Task<IActionResult> GetRegists()
         {
             var list = await _registRepository.GetRegistsAsync();
-            _mapper.Map<RegistDto>(list);
+            _mapper.Map<IEnumerable<RegistDto>>(list);
             return Ok(list);
         }
     }
