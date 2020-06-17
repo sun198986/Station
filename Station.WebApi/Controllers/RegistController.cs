@@ -71,7 +71,7 @@ namespace Station.WebApi.Controllers
         public async Task<IActionResult> DeleteRegist(
             [FromRoute]
             [ModelBinder(BinderType = typeof(ArrayModelBinder))]
-            IEnumerable<string> ids, [FromQuery] string fields)
+            IEnumerable<string> ids)
         {
             if (ids == null)
                 return BadRequest();
