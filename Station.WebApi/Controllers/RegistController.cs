@@ -19,19 +19,18 @@ namespace Station.WebApi.Controllers
         private readonly IRegistRepository _registRepository;
         private readonly IMapper _mapper;
 
-        public RegistController(IRegistRepository registRepository,IMapper mapper)
+        public RegistController(IRegistRepository registRepository, IMapper mapper)
         {
-            _registRepository = registRepository??throw new ArgumentNullException(nameof(registRepository));
-            _mapper = mapper?? throw new ArgumentNullException(nameof(mapper));
+            _registRepository = registRepository ?? throw new ArgumentNullException(nameof(registRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetRegists([FromQuery] string fields)
         {
             var entities = await _registRepository.GetRegistsAsync();
-            var listDto =_mapper.Map<IEnumerable<RegistDto>>(entities);
+            var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
             return Ok(listDto.ShapeData(fields));
-
         }
 
         [HttpGet("{ids}", Name = nameof(GetRegistCollection))]
@@ -46,7 +45,7 @@ namespace Station.WebApi.Controllers
             var entities = await _registRepository.GetRegistsAsync(ids);
 
             if (ids.Count() != entities.Count())
-            { 
+            {
                 List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
                 return NotFound(JsonSerializer.Serialize(idNotFounds));
             }
@@ -58,17 +57,56 @@ namespace Station.WebApi.Controllers
         [HttpPost]
         public IActionResult CreateReigst(RegistAddDto regist)
         {
-            if(regist==null)
+            if (regist == null)
                 throw new ArgumentNullException(nameof(regist));
 
-            var entity =  _mapper.Map<Regist>(regist);
+            var entity = _mapper.Map<Regist>(regist);
             _registRepository.AddRegist(entity);
             _registRepository.SaveChange();
-            //bool result = await _registRepository.SaveAsync();//异步问题待解决
-            //if (!result)
-            //    return BadRequest();
             var returnDto = _mapper.Map<RegistDto>(entity);
-            return CreatedAtRoute(nameof(GetRegistCollection), new {ids = returnDto.RegistId}, returnDto);
+            return CreatedAtRoute(nameof(GetRegistCollection), new { ids = returnDto.RegistId }, returnDto);
+        }
+
+        [HttpDelete("{ids}")]
+        public async Task<IActionResult> DeleteRegist(
+            [FromRoute]
+            [ModelBinder(BinderType = typeof(ArrayModelBinder))]
+            IEnumerable<string> ids, [FromQuery] string fields)
+        {
+            if (ids == null)
+                return BadRequest();
+
+            var entities = await _registRepository.GetRegistsAsync(ids);
+
+            if (ids.Count() != entities.Count())
+            {
+                List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
+                return NotFound(JsonSerializer.Serialize(idNotFounds));
+            }
+
+            _registRepository.DeleteRegist(entities);
+            _registRepository.SaveChange();
+
+            return NoContent();
+        }
+
+        [HttpPut("{registId}")]
+        public async Task<IActionResult> UpdateRegist([FromRoute]string registId,[FromBody]RegistUpdateDto regist)
+        {
+            if (registId == null)
+                throw new ArgumentNullException(nameof(registId));
+            if (regist == null)
+                throw new ArgumentNullException(nameof(regist));
+            var entity = await _registRepository.GetRegistsAsync(registId);
+            if (entity == null)
+            {
+                return NotFound($"id:{registId}没有查到数据");
+            }
+
+            _mapper.Map(regist, entity);
+            _registRepository.UpdateRegist(entity);
+            _registRepository.SaveChange();
+            return NoContent();
         }
     }
 }

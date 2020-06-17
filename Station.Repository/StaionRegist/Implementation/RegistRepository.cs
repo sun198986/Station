@@ -22,6 +22,17 @@ namespace Station.Repository.StaionRegist.Implementation
             return list;
         }
 
+        public async Task<Regist> GetRegistsAsync(string registId)
+        {
+            if (string.IsNullOrWhiteSpace(registId))
+            {
+                throw new ArgumentNullException(nameof(registId));
+            }
+
+            return await _context.Regists
+                .FirstOrDefaultAsync(x => x.RegistId.Equals(registId));
+        }
+
         public async Task<IEnumerable<Regist>> GetRegistsAsync(IEnumerable<string> registIds)
         {
             if (registIds == null)
@@ -30,7 +41,6 @@ namespace Station.Repository.StaionRegist.Implementation
             }
             return await _context.Regists
                 .Where(x => registIds.Contains(x.RegistId))
-                .OrderBy(x => x.RegistId)
                 .ToListAsync();
         }
 
@@ -44,6 +54,54 @@ namespace Station.Repository.StaionRegist.Implementation
             regist.RegistId = Guid.NewGuid().ToString();
             _context.Regists.Add(regist);
             //_context.SaveChanges();
+        }
+
+        public void AddRegist(IEnumerable<Regist> regists)
+        {
+            if (regists == null)
+            {
+                throw new ArgumentNullException(nameof(regists));
+            }
+
+            foreach (var regist in regists)
+            {
+                regist.RegistId = Guid.NewGuid().ToString();
+            }
+            _context.Regists.AddRange(regists);
+        }
+
+
+        public void DeleteRegist(Regist regist)
+        {
+            if (regist == null)
+            {
+                throw new ArgumentNullException(nameof(regist));
+            }
+
+            _context.Regists.Remove(regist);
+        }
+
+        public void DeleteRegist(IEnumerable<Regist> regists)
+        {
+            if (regists == null)
+            {
+                throw new ArgumentNullException(nameof(regists));
+            }
+            _context.Regists.RemoveRange(regists);
+        }
+
+        public void UpdateRegist(Regist regist)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public async Task<bool> RegistExistsAsync(string registId)
+        {
+            if (string.IsNullOrWhiteSpace(registId))
+            {
+                throw new ArgumentNullException(nameof(registId));
+            }
+            return await _context.Regists.AnyAsync(x => x.RegistId == registId);
         }
 
 

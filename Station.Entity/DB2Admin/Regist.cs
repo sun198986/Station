@@ -7,7 +7,7 @@ namespace Station.Entity.DB2Admin
     [Table("DB2Admin.TestRegist")]
     public class Regist
     {
-        [Key]
+        [Key,Column("REGISTID")]
         public string RegistId { set; get; }
 
         public DateTime RegistDate { set; get; }
