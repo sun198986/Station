@@ -23,8 +23,17 @@ namespace Station.Repository.StaionRegist
         /// <param name="regist"></param>
         void AddRegist(Regist regist);
 
-
+        /// <summary>
+        /// 异步保存
+        /// </summary>
+        /// <returns></returns>
         Task<bool> SaveAsync();
+
+        /// <summary>
+        /// 同步保存
+        /// </summary>
+        /// <returns></returns>
+        bool SaveChange();
 
     }
 }

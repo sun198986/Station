@@ -42,14 +42,19 @@ namespace Station.Repository.StaionRegist.Implementation
             }
 
             regist.RegistId = Guid.NewGuid().ToString();
-
             _context.Regists.Add(regist);
+            //_context.SaveChanges();
         }
 
 
         public async Task<bool> SaveAsync()
         {
             return await _context.SaveChangesAsync() >= 0;
+        }
+
+        public bool SaveChange()
+        {
+            return _context.SaveChanges() >= 0;
         }
     }
 }

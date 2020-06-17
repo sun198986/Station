@@ -56,16 +56,17 @@ namespace Station.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReigst(RegistAddDto regist)
+        public IActionResult CreateReigst(RegistAddDto regist)
         {
             if(regist==null)
                 throw new ArgumentNullException(nameof(regist));
 
             var entity =  _mapper.Map<Regist>(regist);
             _registRepository.AddRegist(entity);
-            bool result = await _registRepository.SaveAsync();//异步问题待解决
-            if (!result)
-                return BadRequest();
+            _registRepository.SaveChange();
+            //bool result = await _registRepository.SaveAsync();//异步问题待解决
+            //if (!result)
+            //    return BadRequest();
             var returnDto = _mapper.Map<RegistDto>(entity);
             return CreatedAtRoute(nameof(GetRegistCollection), new {ids = returnDto.RegistId}, returnDto);
         }
