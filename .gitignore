@@ -18,3 +18,4 @@
 /Station.Models/bin/Debug/netcoreapp3.1
 /Station.Helper/bin/Debug/netcoreapp3.1
 /Station.Helper/obj
+/Station.WcfAdapter/obj

@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Station.Helper\Station.Helper.csproj" />
     <ProjectReference Include="..\Station.Models\Station.Models.csproj" />
     <ProjectReference Include="..\Station.Repository\Station.Repository.csproj" />
+    <ProjectReference Include="..\Station.WcfAdapter\Station.WcfAdapter.csproj" />
   </ItemGroup>
 
 

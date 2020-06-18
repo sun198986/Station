@@ -11,6 +11,7 @@ using Station.Aop.Filter;
 using Station.Entity.DB2Admin;
 using Station.Repository.StaionRegist;
 using Station.Repository.StaionRegist.Implementation;
+using Station.WcfAdapter;
 
 namespace Station.WebApi
 {
@@ -50,6 +51,8 @@ namespace Station.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseWcfAdapter();//wcfÖÐ¼ä¼þ
 
             app.UseEndpoints(endpoints =>
             {

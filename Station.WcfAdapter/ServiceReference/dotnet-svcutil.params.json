@@ -1,0 +1,33 @@
+{
+  "providerId": "Microsoft.Tools.ServiceModel.Svcutil",
+  "version": "2.0.1",
+  "options": {
+    "inputs": [
+      "http://10.236.198.102:8888/ServiceControler?wsdl"
+    ],
+    "namespaceMappings": [
+      "*, ServiceReference"
+    ],
+    "outputFile": "Reference.cs",
+    "references": [
+      "Microsoft.AspNetCore.Http.Abstractions, {Microsoft.AspNetCore.Http.Abstractions, 2.2.0}",
+      "Microsoft.AspNetCore.Http.Features, {Microsoft.AspNetCore.Http.Features, 2.2.0}",
+      "Microsoft.Extensions.Configuration, {Microsoft.Extensions.Configuration, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Configuration.Abstractions, {Microsoft.Extensions.Configuration.Abstractions, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Configuration.Binder, {Microsoft.Extensions.Configuration.Binder, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.DependencyInjection, {Microsoft.Extensions.DependencyInjection, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.DependencyInjection.Abstractions, {Microsoft.Extensions.DependencyInjection.Abstractions, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Logging, {Microsoft.Extensions.Logging, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Logging.Abstractions, {Microsoft.Extensions.Logging.Abstractions, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Logging.Configuration, {Microsoft.Extensions.Logging.Configuration, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Logging.Console, {Microsoft.Extensions.Logging.Console, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Options, {Microsoft.Extensions.Options, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Options.ConfigurationExtensions, {Microsoft.Extensions.Options.ConfigurationExtensions, 5.0.0-preview.5.20278.1}",
+      "Microsoft.Extensions.Primitives, {Microsoft.Extensions.Primitives, 5.0.0-preview.5.20278.1}",
+      "System.Runtime.CompilerServices.Unsafe, {System.Runtime.CompilerServices.Unsafe, 5.0.0-preview.5.20278.1}",
+      "System.Text.Encodings.Web, {System.Text.Encodings.Web, 4.5.0}"
+    ],
+    "targetFramework": "netcoreapp3.1",
+    "typeReuseMode": "All"
+  }
+}
