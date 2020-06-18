@@ -5,6 +5,9 @@ using System.ServiceModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,7 +36,27 @@ namespace Station.WebApi
             {
                 options.Filters.Add(typeof(CustomerExceptionFilterAttribute));//全局异常处理
             })
-            .AddXmlDataContractSerializerFormatters();//支持xml处理
+            .AddXmlDataContractSerializerFormatters()
+            .ConfigureApiBehaviorOptions(setup =>//错误信息输出配置 FluentValidation
+            {
+                setup.InvalidModelStateResponseFactory = context =>
+                {
+                    var problemDetail = new ValidationProblemDetails(context.ModelState)
+                    {
+                        Type = "",
+                        Title = "有错误",
+                        Status = StatusCodes.Status422UnprocessableEntity,
+                        Detail = "请看详细信息",
+                        Instance = context.HttpContext.Request.Path
+                    };
+
+                    problemDetail.Extensions.Add("traceId", context.HttpContext.TraceIdentifier);
+                    return new UnprocessableEntityObjectResult(problemDetail)
+                    {
+                        ContentTypes = { "application/problem+json" }
+                    };
+                };
+            });//支持xml处理
 
             services.AddDbContext<Db2AdminDbContext>();
             services.AddTransient<IRegistRepository, RegistRepository>();
@@ -41,7 +64,14 @@ namespace Station.WebApi
 
 
             services.AddAutoMapper(Assembly.Load("Station.Entity"),Assembly.Load("Station.Models"));
-            
+
+            services.Configure<MvcOptions>(config =>
+            {
+                var newtonSoftJsonOutputFormatter =
+                    config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
+                newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
