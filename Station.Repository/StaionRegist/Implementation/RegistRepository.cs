@@ -9,11 +9,15 @@ namespace Station.Repository.StaionRegist.Implementation
 {
     public class RegistRepository:IRegistRepository
     {
-        private readonly Db2AdminDbContext _context;
+        private Db2AdminDbContext _context;
 
         public RegistRepository(Db2AdminDbContext context)
         {
             _context = context;
+        }
+        public Db2AdminDbContext GetDbContext()
+        {
+            return _context;
         }
 
         public async Task<IEnumerable<Regist>> GetRegistsAsync()
