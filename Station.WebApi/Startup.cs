@@ -63,7 +63,10 @@ namespace Station.WebApi
             //services.AddScoped<ClientBase<IUser>,UserClient>(new UserClient(UserClient.EndpointConfiguration.WSHttpBinding_IUser, remoteAddress: @"http://10.236.198.102:8888/ServiceControler/User"));
 
 
-            services.AddAutoMapper(Assembly.Load("Station.Entity"),Assembly.Load("Station.Models"));
+            services.AddAutoMapper(config =>
+            {
+                config.ForAllMaps((a, b) => b.ForAllMembers(opt => opt.Condition((src, dest, sourceMember) => sourceMember != null)));
+            },Assembly.Load("Station.Entity"),Assembly.Load("Station.Models"));
 
             services.Configure<MvcOptions>(config =>
             {
