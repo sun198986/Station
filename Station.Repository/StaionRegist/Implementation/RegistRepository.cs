@@ -15,10 +15,7 @@ namespace Station.Repository.StaionRegist.Implementation
         {
             _context = context;
         }
-        public Db2AdminDbContext GetDbContext()
-        {
-            return _context;
-        }
+        public Db2AdminDbContext GetDbContext() => _context;
 
         public async Task<IEnumerable<Regist>> GetRegistsAsync()
         {
