@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Station.Entity.DB2Admin;
 using Station.Helper;
 using Station.Models.RegistDto;
+using Station.Repository;
 using Station.Repository.StaionRegist;
 
 namespace Station.WebApi.Controllers
@@ -62,7 +63,7 @@ namespace Station.WebApi.Controllers
 
             var entity = _mapper.Map<Regist>(regist);
             _registRepository.AddRegist(entity);
-            _registRepository.SaveChange();
+            _registRepository.SaveChanges();
             var returnDto = _mapper.Map<RegistDto>(entity);
             return CreatedAtRoute(nameof(GetRegistCollection), new { ids = returnDto.RegistId }, returnDto);
         }
@@ -77,7 +78,6 @@ namespace Station.WebApi.Controllers
                 return BadRequest();
 
             var entities = await _registRepository.GetRegistsAsync(ids);
-
             if (ids.Count() != entities.Count())
             {
                 List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
@@ -85,7 +85,7 @@ namespace Station.WebApi.Controllers
             }
 
             _registRepository.DeleteRegist(entities);
-            _registRepository.SaveChange();
+            _registRepository.SaveChanges();
 
             return NoContent();
         }
@@ -105,7 +105,7 @@ namespace Station.WebApi.Controllers
 
             _mapper.Map(regist, entity);
             _registRepository.UpdateRegist(entity);
-            _registRepository.SaveChange();
+            _registRepository.SaveChanges();
             return NoContent();
         }
     }

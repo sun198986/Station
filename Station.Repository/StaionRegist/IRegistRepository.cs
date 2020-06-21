@@ -69,11 +69,11 @@ namespace Station.Repository.StaionRegist
         /// <returns></returns>
         Task<bool> SaveAsync();
 
-        /// <summary>
-        /// 同步保存
-        /// </summary>
-        /// <returns></returns>
-        bool SaveChange();
+        ///// <summary>
+        ///// 同步保存
+        ///// </summary>
+        ///// <returns></returns>
+       // bool SaveChange();
 
     }
 }

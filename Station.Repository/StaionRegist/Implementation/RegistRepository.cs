@@ -111,9 +111,9 @@ namespace Station.Repository.StaionRegist.Implementation
             return await _context.SaveChangesAsync() >= 0;
         }
 
-        public bool SaveChange()
-        {
-            return _context.SaveChanges() >= 0;
-        }
+        //public bool SaveChange()
+        //{
+        //    return _context.SaveChanges() >= 0;
+        //}
     }
 }
