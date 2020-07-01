@@ -3,14 +3,17 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
 using AutoMapper;
+using IBM.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using ServiceReference;
 using Station.Aop.Filter;
 using Station.Entity.DB2Admin;
@@ -28,6 +31,14 @@ namespace Station.WebApi
         }
 
         public IConfiguration Configuration { get; }
+
+        public static readonly ILoggerFactory ConsoleLoggerFactory =
+           LoggerFactory.Create(builder =>
+           {
+               builder.AddFilter((category, level) =>
+                   category == DbLoggerCategory.Database.Command.Name
+                   && level == LogLevel.Information).AddConsole();
+           });
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -58,7 +69,13 @@ namespace Station.WebApi
                 };
             });//支持xml处理
 
-            services.AddDbContext<Db2AdminDbContext>();
+            services.AddDbContext<Db2AdminDbContext>(options =>
+            {
+                options.UseDb2(Configuration.GetConnectionString("LocalDB"), action =>
+                {
+
+                }).UseLoggerFactory(ConsoleLoggerFactory);//打印sql脚本
+            });
             services.AddTransient<IRegistRepository, RegistRepository>();
             //services.AddScoped<ClientBase<IUser>,UserClient>(new UserClient(UserClient.EndpointConfiguration.WSHttpBinding_IUser, remoteAddress: @"http://10.236.198.102:8888/ServiceControler/User"));
 
@@ -66,7 +83,7 @@ namespace Station.WebApi
             services.AddAutoMapper(config =>
             {
                 config.ForAllMaps((a, b) => b.ForAllMembers(opt => opt.Condition((src, dest, sourceMember) => sourceMember != null)));
-            },Assembly.Load("Station.Entity"),Assembly.Load("Station.Models"));
+            }, Assembly.Load("Station.Entity"), Assembly.Load("Station.Models"));
 
             services.Configure<MvcOptions>(config =>
             {

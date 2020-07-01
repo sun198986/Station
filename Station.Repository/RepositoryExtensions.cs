@@ -22,7 +22,7 @@ namespace Station.Repository
             return await t.GetDbContext().Set<TU>().FindAsync(id);
         }
 
-        public static async Task<IEnumerable<TU>> GetAsync<T,TU>(this T t,string primaryKeyName, IEnumerable<string> ids) where T : IRepositoryBase where TU : class
+        public static async Task<IEnumerable<TU>> GetAsync<T,TU>(this T t, IEnumerable<string> ids) where T : IRepositoryBase where TU : class
         {
             if (t == null) throw new ArgumentNullException(nameof(t));
 

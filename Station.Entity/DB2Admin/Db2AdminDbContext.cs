@@ -11,13 +11,13 @@ namespace Station.Entity.DB2Admin
 {
     public class Db2AdminDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseDb2("Database=U_PMASS;UID=MASSER1;PWD=8Om7.bN8v;Server=10.236.198.73", option =>
-            {
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseDb2("Database=U_PMASS;UID=MASSER1;PWD=8Om7.bN8v;Server=10.236.198.73", option =>
+        //    {
 
-            }).UseLoggerFactory(ConsoleLoggerFactory);
-        }
+        //    }).UseLoggerFactory(ConsoleLoggerFactory);
+        //}
         public Db2AdminDbContext(DbContextOptions<Db2AdminDbContext> options) : base(options)
         {
             
