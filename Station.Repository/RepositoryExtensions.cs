@@ -25,8 +25,9 @@ namespace Station.Repository
         public static async Task<IEnumerable<TU>> GetAsync<T,TU>(this T t,string primaryKeyName, IEnumerable<string> ids) where T : IRepositoryBase where TU : class
         {
             if (t == null) throw new ArgumentNullException(nameof(t));
+
             return await t.GetDbContext().Set<TU>()
-                .Where(p => ids.Contains(typeof(TU).GetProperty(primaryKeyName).GetValue(p))).ToListAsync();
+                .Where(p => ids.Contains(typeof(TU).GetProperty(typeof(TU).Name + "Id").GetValue(p))).ToListAsync();
         }
 
         public static  IEnumerable<TU> GetByIds<T,TU>(this T t, string primaryKeyName, IEnumerable<string> ids) where T : IRepositoryBase where TU : class
