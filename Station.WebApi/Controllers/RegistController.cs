@@ -5,6 +5,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Station.Aop.Filter;
 using Station.Entity.DB2Admin;
 using Station.Helper;
 using Station.Models.RegistDto;
@@ -19,11 +21,13 @@ namespace Station.WebApi.Controllers
     {
         private readonly IRegistRepository _registRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public RegistController(IRegistRepository registRepository, IMapper mapper)
+        public RegistController(IRegistRepository registRepository, IMapper mapper,ILogger<RegistController> logger)
         {
             _registRepository = registRepository ?? throw new ArgumentNullException(nameof(registRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]

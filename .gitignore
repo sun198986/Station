@@ -20,3 +20,5 @@
 /Station.Helper/obj
 /Station.WcfAdapter/obj
 /Station.WcfAdapter/bin/Debug/netcoreapp3.1
+/Station.NLog/bin/Debug/netcoreapp3.1
+/Station.NLog/obj

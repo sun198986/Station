@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="NLog.Config" Version="4.7.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,9 +18,12 @@
     <ProjectReference Include="..\Station.Entity\Station.Entity.csproj" />
     <ProjectReference Include="..\Station.Helper\Station.Helper.csproj" />
     <ProjectReference Include="..\Station.Models\Station.Models.csproj" />
+    <ProjectReference Include="..\Station.NLog\Station.NLog.csproj" />
     <ProjectReference Include="..\Station.Repository\Station.Repository.csproj" />
     <ProjectReference Include="..\Station.WcfAdapter\Station.WcfAdapter.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 
 </Project>

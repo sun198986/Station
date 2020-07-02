@@ -46,6 +46,7 @@ namespace Station.WebApi
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(CustomerExceptionFilterAttribute));//全局异常处理
+                options.Filters.Add(typeof(CustomerResultFilterAttribute));
             })
             .AddXmlDataContractSerializerFormatters()
             .ConfigureApiBehaviorOptions(setup =>//错误信息输出配置 FluentValidation
@@ -71,7 +72,7 @@ namespace Station.WebApi
 
             services.AddDbContext<Db2AdminDbContext>(options =>
             {
-                options.UseDb2(Configuration.GetConnectionString("LocalDB"), action =>
+                options.UseDb2(Configuration.GetConnectionString("DevelopDB"), action =>
                 {
 
                 }).UseLoggerFactory(ConsoleLoggerFactory);//打印sql脚本
