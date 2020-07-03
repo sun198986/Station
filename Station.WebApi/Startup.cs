@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ServiceReference;
 using Station.Aop.Filter;
+using Station.EFCore.IbmDb;
 using Station.Entity.DB2Admin;
 using Station.Repository.StaionRegist;
 using Station.Repository.StaionRegist.Implementation;
@@ -70,7 +71,7 @@ namespace Station.WebApi
                 };
             });//支持xml处理
 
-            services.AddDbContext<Db2AdminDbContext>(options =>
+            services.AddDbContext<IbmDbContext>(options =>
             {
                 options.UseDb2(Configuration.GetConnectionString("DevelopDB"), action =>
                 {
@@ -78,6 +79,7 @@ namespace Station.WebApi
                 }).UseLoggerFactory(ConsoleLoggerFactory);//打印sql脚本
             });
             services.AddTransient<IRegistRepository, RegistRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             //services.AddScoped<ClientBase<IUser>,UserClient>(new UserClient(UserClient.EndpointConfiguration.WSHttpBinding_IUser, remoteAddress: @"http://10.236.198.102:8888/ServiceControler/User"));
 
 

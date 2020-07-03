@@ -1,9 +1,10 @@
-﻿using Station.Entity.DB2Admin;
+﻿using Station.EFCore.IbmDb;
+using Station.Entity.DB2Admin;
 
 namespace Station.Repository
 {
     public interface IRepositoryBase
     {
-        Db2AdminDbContext GetDbContext();
+        IbmDbContext GetDbContext();
     }
 }

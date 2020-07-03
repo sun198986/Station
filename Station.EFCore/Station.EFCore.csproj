@@ -9,7 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Station.EFCore\Station.EFCore.csproj" />
+    <PackageReference Include="IBM.EntityFrameworkCore" Version="1.3.0.100" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Station.Entity\Station.Entity.csproj" />
   </ItemGroup>
 

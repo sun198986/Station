@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Station.EFCore.IbmDb;
 using Station.Entity.DB2Admin;
 
 namespace Station.Repository.StaionRegist.Implementation
 {
     public class RegistRepository:IRegistRepository
     {
-        private Db2AdminDbContext _context;
+        private IbmDbContext _context;
 
-        public RegistRepository(Db2AdminDbContext context)
+        public RegistRepository(IbmDbContext context)
         {
             _context = context;
         }
-        public Db2AdminDbContext GetDbContext() => _context;
+        public IbmDbContext GetDbContext() => _context;
 
         public async Task<IEnumerable<Regist>> GetRegistsAsync()
         {

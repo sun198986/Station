@@ -22,3 +22,5 @@
 /Station.WcfAdapter/bin/Debug/netcoreapp3.1
 /Station.NLog/bin/Debug/netcoreapp3.1
 /Station.NLog/obj
+/Station.EFCore/obj
+/Station.EFCore/bin/Debug/netcoreapp3.1
