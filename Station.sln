@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1_Entities", "1_Entities", "{7F8D74BC-CF3F-4F2F-90D7-BBC78C77A798}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2_Entities", "2_Entities", "{7F8D74BC-CF3F-4F2F-90D7-BBC78C77A798}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2_Services", "2_Services", "{012D4A83-33B4-4B4F-B04E-40F0405CAAC6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3_Services", "3_Services", "{012D4A83-33B4-4B4F-B04E-40F0405CAAC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4_Models", "4_Models", "{AF7EA243-8948-42A8-A7C4-66713DEF6D81}"
 EndProject
@@ -37,9 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.WcfAdapter", "Stati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.NLog", "Station.NLog\Station.NLog.csproj", "{AFEE80C8-1C60-4462-B54D-3C4A36EB5CA8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0_Data", "0_Data", "{DED55B82-C3ED-40DE-8448-6CD41D3D5996}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1_Data", "1_Data", "{DED55B82-C3ED-40DE-8448-6CD41D3D5996}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.EFCore", "Station.EFCore\Station.EFCore.csproj", "{5DB822D0-215F-46F8-A801-7ED2D0845D97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.EFCore", "Station.EFCore\Station.EFCore.csproj", "{5DB822D0-215F-46F8-A801-7ED2D0845D97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
