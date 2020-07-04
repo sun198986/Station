@@ -103,7 +103,7 @@ namespace Station.Repository.StaionRegist.Implementation
             {
                 throw new ArgumentNullException(nameof(registId));
             }
-            return await _context.Regists.AnyAsync(x => x.RegistId == registId);
+            return await _context.Regists.Where(x => x.RegistId.Trim() == registId).FirstOrDefaultAsync()!=null;
         }
 
 

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Station.Entity.DB2Admin
 {
@@ -10,6 +9,7 @@ namespace Station.Entity.DB2Admin
         /// <summary>
         /// 主键
         /// </summary>
+        [Key, Column("EMPLOYEEID")]
         public string EmployeeId { get; set; }
 
         public string EmployeeName { get; set; }

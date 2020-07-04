@@ -19,5 +19,7 @@ namespace Station.EFCore.IbmDb
         /// </summary>
         public DbSet<Regist> Regists { get; set; }
 
+        public DbSet<Employee> Employees { get; set; }
+
     }
 }

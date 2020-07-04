@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Station.Models.EmployeeDto
 {
-    public class EmployeeAddDto
+    public class EmployeeUpdateDto
     {
         public string EmployeeName { get; set; }
-
     }
 }
