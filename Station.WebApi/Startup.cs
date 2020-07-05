@@ -14,8 +14,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Station.Aop.Filter;
 using Station.EFCore.IbmDb;
-using Station.Repository.StaionRegist;
-using Station.Repository.StaionRegist.Implementation;
 
 namespace Station.WebApi
 {
@@ -73,8 +71,11 @@ namespace Station.WebApi
 
                 }).UseLoggerFactory(ConsoleLoggerFactory);//打印sql脚本
             });
-            services.AddTransient<IRegistRepository, RegistRepository>();
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("Station.Repository"))
+               .AddClasses().UsingAttributes());//程序集注入
+            // services.AddTransient<IRegistRepository, RegistRepository>();
+            // services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             //services.AddScoped<ClientBase<IUser>,UserClient>(new UserClient(UserClient.EndpointConfiguration.WSHttpBinding_IUser, remoteAddress: @"http://10.236.198.102:8888/ServiceControler/User"));
 
 
@@ -89,7 +90,6 @@ namespace Station.WebApi
                     config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
                 newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

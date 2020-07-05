@@ -1,10 +1,10 @@
-﻿using Station.EFCore.IbmDb;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
+using Station.EFCore.IbmDb;
 
 namespace Station.Repository.StaionRegist.Implementation
 {
+    [ServiceDescriptor(typeof(IEmployeeRepository), ServiceLifetime.Transient)]
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly IbmDbContext _context;

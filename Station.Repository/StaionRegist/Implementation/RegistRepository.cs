@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
 using Station.EFCore.IbmDb;
 using Station.Entity.DB2Admin;
 
 namespace Station.Repository.StaionRegist.Implementation
 {
+    [ServiceDescriptor(typeof(IRegistRepository), ServiceLifetime.Transient)]
     public class RegistRepository:IRegistRepository
     {
         private IbmDbContext _context;

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Scrutor" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Station.EFCore\Station.EFCore.csproj" />
     <ProjectReference Include="..\Station.Entity\Station.Entity.csproj" />
   </ItemGroup>
