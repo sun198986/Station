@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Station.Entity.DB2Admin
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public class DB2AdminTableAttribute : TableAttribute
     {
         public DB2AdminTableAttribute(string name):base(name)

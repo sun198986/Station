@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.ServiceModel;
 using AutoMapper;
 using IBM.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
@@ -14,13 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ServiceReference;
 using Station.Aop.Filter;
 using Station.EFCore.IbmDb;
-using Station.Entity.DB2Admin;
 using Station.Repository.StaionRegist;
 using Station.Repository.StaionRegist.Implementation;
-using Station.WcfAdapter;
 
 namespace Station.WebApi
 {
