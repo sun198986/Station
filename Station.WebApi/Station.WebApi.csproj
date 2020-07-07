@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Station.Aop\Station.Aop.csproj" />
+    <ProjectReference Include="..\Station.ETag\Station.ETag.csproj" />
     <ProjectReference Include="..\Station.Helper\Station.Helper.csproj" />
     <ProjectReference Include="..\Station.Models\Station.Models.csproj" />
     <ProjectReference Include="..\Station.NLog\Station.NLog.csproj" />

@@ -2,6 +2,7 @@ using System.Linq;
 using System.Reflection;
 using AutoMapper;
 using IBM.EntityFrameworkCore;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using Station.Aop.Filter;
 using Station.EFCore.IbmDb;
 
@@ -37,10 +39,24 @@ namespace Station.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Etag 缓存
+            services.AddHttpCacheHeaders(expires =>
+                {
+                    expires.MaxAge = 120;
+                    expires.CacheLocation = CacheLocation.Private;
+                },
+                validation =>
+                {
+                    validation.MustRevalidate = true;
+                });
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(CustomerExceptionFilterAttribute));//全局异常处理
                 options.Filters.Add(typeof(CustomerResultFilterAttribute));
+            })
+            .AddNewtonsoftJson(setup =>
+            {
+                setup.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             })
             .AddXmlDataContractSerializerFormatters()
             .ConfigureApiBehaviorOptions(setup =>//错误信息输出配置 FluentValidation
@@ -100,11 +116,11 @@ namespace Station.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpCacheHeaders();
+
             app.UseRouting();
 
             app.UseAuthorization();
-
-            //app.UseWcfAdapter();//wcf中间件
 
             app.UseEndpoints(endpoints =>
             {
