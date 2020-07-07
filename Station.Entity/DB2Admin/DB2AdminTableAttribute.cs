@@ -7,9 +7,9 @@ using System.Text;
 namespace Station.Entity.DB2Admin
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class DB2AdminTableAttribute : TableAttribute
+    public class Db2AdminTableAttribute : TableAttribute
     {
-        public DB2AdminTableAttribute(string name):base(name)
+        public Db2AdminTableAttribute(string name):base(name)
         {
             base.Schema = "DB2Admin";
         }

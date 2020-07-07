@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Station.Entity.DB2Admin
 {
-    [DB2AdminTable("Employee")]
+    [Db2AdminTable("Employee")]
     public class Employee
     {
         /// <summary>

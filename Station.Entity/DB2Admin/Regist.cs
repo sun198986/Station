@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Station.Entity.DB2Admin
 {
-    [DB2AdminTable("TestRegist")]
+    [Db2AdminTable("TestRegist")]
     public class Regist
     {
         [Key,Column("REGISTID")]
