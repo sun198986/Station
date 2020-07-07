@@ -41,16 +41,21 @@ namespace Station.WebApi
         {
             //Etag 缓存
             services.AddHttpCacheHeaders(expires =>
-                {
-                    expires.MaxAge = 120;
-                    expires.CacheLocation = CacheLocation.Private;
-                },
-                validation =>
-                {
-                    validation.MustRevalidate = true;
-                });
+            {
+                expires.MaxAge = 120;
+                expires.CacheLocation = CacheLocation.Public;
+            },
+            validation =>
+            {
+                validation.MustRevalidate = true;
+            });
+            services.AddResponseCaching();
             services.AddControllers(options =>
             {
+                options.CacheProfiles.Add("120sCacheProfile",new CacheProfile
+                {
+                    Duration = 120
+                });
                 options.Filters.Add(typeof(CustomerExceptionFilterAttribute));//全局异常处理
                 options.Filters.Add(typeof(CustomerResultFilterAttribute));
             })
@@ -115,6 +120,8 @@ namespace Station.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //app.UseResponseCaching();
 
             app.UseHttpCacheHeaders();
 
