@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
@@ -13,9 +14,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Station.Aop.Filter;
 using Station.EFCore.IbmDb;
+using Station.ETag;
+using Station.Swagger;
 
 namespace Station.WebApi
 {
@@ -39,17 +44,9 @@ namespace Station.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.InitSwaggerConfig();
             //Etag 缓存
-            services.AddHttpCacheHeaders(expires =>
-            {
-                expires.MaxAge = 120;
-                expires.CacheLocation = CacheLocation.Public;
-            },
-            validation =>
-            {
-                validation.MustRevalidate = true;
-            });
-            services.AddResponseCaching();
+            services.InitEtagConfig();
             services.AddControllers(options =>
             {
                 options.CacheProfiles.Add("120sCacheProfile",new CacheProfile
@@ -63,7 +60,6 @@ namespace Station.WebApi
             {
                 setup.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             })
-            .AddXmlDataContractSerializerFormatters()
             .ConfigureApiBehaviorOptions(setup =>//错误信息输出配置 FluentValidation
             {
                 setup.InvalidModelStateResponseFactory = context =>
@@ -83,7 +79,8 @@ namespace Station.WebApi
                         ContentTypes = { "application/problem+json" }
                     };
                 };
-            });//支持xml处理
+            })
+            .AddXmlDataContractSerializerFormatters();//支持xml处理
 
             services.AddDbContext<IbmDbContext>(options =>
             {
@@ -95,10 +92,6 @@ namespace Station.WebApi
 
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("Station.Repository"))
                .AddClasses().UsingAttributes());//程序集注入
-            // services.AddTransient<IRegistRepository, RegistRepository>();
-            // services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            //services.AddScoped<ClientBase<IUser>,UserClient>(new UserClient(UserClient.EndpointConfiguration.WSHttpBinding_IUser, remoteAddress: @"http://10.236.198.102:8888/ServiceControler/User"));
-
 
             services.AddAutoMapper(config =>
             {
@@ -121,8 +114,9 @@ namespace Station.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UserSwaggerConfig();
             //app.UseResponseCaching();
-
+           
             app.UseHttpCacheHeaders();
 
             app.UseRouting();

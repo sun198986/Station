@@ -26,3 +26,5 @@
 /Station.EFCore/bin/Debug/netcoreapp3.1
 /Station.ETag/bin/Debug/netcoreapp3.1
 /Station.ETag/obj
+/Station.Swagger/obj
+/Station.Swagger/bin/Debug/netcoreapp3.1

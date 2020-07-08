@@ -7,6 +7,7 @@ using NLog;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
+using NLog.Config;
 
 namespace Station.WebApi
 {
