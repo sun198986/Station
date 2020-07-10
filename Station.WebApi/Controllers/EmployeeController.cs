@@ -5,9 +5,13 @@ using Station.Helper;
 using Station.Models.EmployeeDto;
 using Station.Repository;
 using Station.Repository.StaionRegist;
+using Station.Repository.Employee;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Station.Models.RegistDto;
 
 namespace Station.WebApi.Controllers
 {
@@ -33,6 +37,27 @@ namespace Station.WebApi.Controllers
             return Ok(listDto.ShapeData(fields));
         }
 
+        [HttpGet("{ids}", Name = nameof(GetEmployeeCollection))]
+        public async Task<ActionResult<EmployeeDto>> GetEmployeeCollection(
+            [FromRoute]
+            [ModelBinder(BinderType = typeof(ArrayModelBinder))]
+            IEnumerable<string> ids, [FromQuery] string fields)
+        {
+            if (ids == null)
+                return BadRequest();
+
+            var entities = await _employeeRepository.GetAsync<IEmployeeRepository,Employee>(ids);
+
+            if (ids.Count() != entities.Count())
+            {
+                List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.EmployeeId).ToList().Contains(x)).ToList();
+                return NotFound(JsonSerializer.Serialize(idNotFounds));
+            }
+
+            var listDto = _mapper.Map<IEnumerable<EmployeeDto>>(entities);
+            return Ok(listDto.ShapeData(fields));
+        }
+
         [HttpPost]
         public async Task<ActionResult<EmployeeDto>> CreateEmployeeForRegist(string registId, EmployeeAddDto employee) {
 
@@ -53,21 +78,22 @@ namespace Station.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{employeeId}")]
-        public async Task<IActionResult> DeleteEmployee(string employeeId) {
-            if (string.IsNullOrWhiteSpace(employeeId))
+        [HttpDelete("{ids}")]
+        public async Task<IActionResult> DeleteEmployee([FromRoute]
+            [ModelBinder(BinderType = typeof(ArrayModelBinder))]
+            IEnumerable<string> ids) {
+            if (ids == null)
+                return BadRequest();
+
+            var entities = await _employeeRepository.GetAsync<IEmployeeRepository, Employee>(ids);
+
+            if (ids.Count() != entities.Count())
             {
-                throw new ArgumentNullException(nameof(employeeId));
+                List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.EmployeeId).ToList().Contains(x)).ToList();
+                return NotFound(JsonSerializer.Serialize(idNotFounds));
             }
 
-            var entity = await _employeeRepository.GetAsync<IEmployeeRepository, Employee>(employeeId);
-
-            if (entity == null)
-            {
-                return NotFound(nameof(employeeId));
-            }
-
-            _registRepository.Delete(entity);
+            _registRepository.Delete(entities);
             _registRepository.SaveChanges();
 
             return NoContent();

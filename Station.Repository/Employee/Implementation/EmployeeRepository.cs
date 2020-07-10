@@ -2,7 +2,7 @@
 using Scrutor;
 using Station.EFCore.IbmDb;
 
-namespace Station.Repository.StaionRegist.Implementation
+namespace Station.Repository.Employee.Implementation
 {
     [ServiceDescriptor(typeof(IEmployeeRepository), ServiceLifetime.Transient)]
     public class EmployeeRepository : IEmployeeRepository
@@ -15,7 +15,5 @@ namespace Station.Repository.StaionRegist.Implementation
         }
 
         public IbmDbContext GetDbContext() => this._context;
-
-
     }
 }
