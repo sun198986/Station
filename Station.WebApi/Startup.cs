@@ -55,6 +55,7 @@ namespace Station.WebApi
                 });
                 options.Filters.Add(typeof(CustomerExceptionFilterAttribute));//全局异常处理
                 options.Filters.Add(typeof(CustomerResultFilterAttribute));
+                options.Filters.Add(typeof(CustomerAuthorizeFilterAttribute));
             })
             .AddNewtonsoftJson(setup =>
             {

@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Station.EFCore\Station.EFCore.csproj" />
     <ProjectReference Include="..\Station.Entity\Station.Entity.csproj" />
+    <ProjectReference Include="..\Station.WcfAdapter\Station.WcfAdapter.csproj" />
   </ItemGroup>
 
 </Project>
