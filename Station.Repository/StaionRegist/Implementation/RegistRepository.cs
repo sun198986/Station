@@ -11,15 +11,14 @@ using Station.Entity.DB2Admin;
 namespace Station.Repository.StaionRegist.Implementation
 {
     [ServiceDescriptor(typeof(IRegistRepository), ServiceLifetime.Transient)]
-    public class RegistRepository:IRegistRepository
+    public class RegistRepository:RepositoryBase<Regist>,IRegistRepository
     {
         private IbmDbContext _context;
 
-        public RegistRepository(IbmDbContext context)
+        public RegistRepository(IbmDbContext context):base(context)
         {
             _context = context;
         }
-        public IbmDbContext GetDbContext() => _context;
 
         public async Task<IEnumerable<Regist>> GetRegistsAsync()
         {

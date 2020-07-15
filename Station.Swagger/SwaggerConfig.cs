@@ -12,7 +12,7 @@ namespace Station.Swagger
         {
             service.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Station API", Version = "v1" });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 //var basePath = AppDomain.CurrentDomain.BaseDirectory;
                 var xmlPath = Path.Combine(basePath, "Station.WebApi.xml");
@@ -25,7 +25,7 @@ namespace Station.Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Station API V1");
             });
         }
     }

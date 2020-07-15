@@ -5,7 +5,7 @@ using Station.Entity.DB2Admin;
 
 namespace Station.Repository.StaionRegist
 {
-    public interface IRegistRepository:IRepositoryBase
+    public interface IRegistRepository:IRepositoryBase<Regist>
     {
         /// <summary>
         /// 查询所有信息

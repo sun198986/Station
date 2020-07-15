@@ -32,7 +32,7 @@ namespace Station.WebApi.Controllers
 
         [HttpGet]
         public async Task<ActionResult<EmployeeDto>> GetEmployees([FromQuery] string fields) {
-            var entities = await _employeeRepository.GetAsync<IEmployeeRepository, Employee>();
+            var entities = await _employeeRepository.GetAsync();
             var listDto = _mapper.Map<IEnumerable<EmployeeDto>>(entities);
             return Ok(listDto.ShapeData(fields));
         }
@@ -46,7 +46,7 @@ namespace Station.WebApi.Controllers
             if (ids == null)
                 return BadRequest();
 
-            var entities = await _employeeRepository.GetAsync<IEmployeeRepository,Employee>(ids);
+            var entities = await _employeeRepository.GetAsync(ids);
 
             if (ids.Count() != entities.Count())
             {
@@ -85,7 +85,7 @@ namespace Station.WebApi.Controllers
             if (ids == null)
                 return BadRequest();
 
-            var entities = await _employeeRepository.GetAsync<IEmployeeRepository, Employee>(ids);
+            var entities = await _employeeRepository.GetAsync(ids);
 
             if (ids.Count() != entities.Count())
             {
@@ -93,8 +93,8 @@ namespace Station.WebApi.Controllers
                 return NotFound(JsonSerializer.Serialize(idNotFounds));
             }
 
-            _registRepository.Delete(entities);
-            _registRepository.SaveChanges();
+            _employeeRepository.Delete(entities);
+            _employeeRepository.SaveChanges();
 
             return NoContent();
         }
@@ -105,7 +105,7 @@ namespace Station.WebApi.Controllers
             if (employee == null) {
                 throw new ArgumentNullException(nameof(employee));
             }
-            var entity = await _employeeRepository.GetAsync<IEmployeeRepository, Employee>(employeeId);
+            var entity = await _employeeRepository.GetAsync(employeeId);
             if (entity == null) {
                 return NotFound($"id:{employeeId}没有查到数据");
             }

@@ -4,5 +4,12 @@
         <name>Station.WebApi</name>
     </assembly>
     <members>
+        <member name="M:Station.WebApi.Controllers.RegistController.CreateRegist(System.Collections.Generic.IEnumerable{Station.Models.RegistDto.RegistAddDto})">
+            <summary>
+            批量更新注册信息
+            </summary>
+            <param name="regists">注册信息集合</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

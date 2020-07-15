@@ -5,15 +5,13 @@ using Station.EFCore.IbmDb;
 namespace Station.Repository.Employee.Implementation
 {
     [ServiceDescriptor(typeof(IEmployeeRepository), ServiceLifetime.Transient)]
-    public class EmployeeRepository : IEmployeeRepository
+    public class EmployeeRepository : RepositoryBase<Entity.DB2Admin.Employee>,IEmployeeRepository
     {
         private readonly IbmDbContext _context;
 
-        public EmployeeRepository(IbmDbContext context)
+        public EmployeeRepository(IbmDbContext context):base(context)
         {
             this._context = context;
         }
-
-        public IbmDbContext GetDbContext() => this._context;
     }
 }
