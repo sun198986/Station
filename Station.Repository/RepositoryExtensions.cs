@@ -49,6 +49,11 @@ namespace Station.Repository
         {
             if (t == null) throw new ArgumentNullException(nameof(t));
             if (entities == null) throw new ArgumentNullException(nameof(entities));
+            string keyId = typeof(TU).Name+"Id";
+            foreach (var entity in entities)
+            {
+                entity.GetType().GetProperty(keyId)?.SetValue(entity,Guid.NewGuid().ToString());
+            }
             t.GetDbContext().Set<TU>().AddRange(entities);
         }
 

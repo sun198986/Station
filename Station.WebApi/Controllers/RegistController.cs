@@ -71,6 +71,27 @@ namespace Station.WebApi.Controllers
             return CreatedAtRoute(nameof(GetRegistCollection), new { ids = returnDto.RegistId }, returnDto);
         }
 
+        /// <summary>
+        /// 批量更新注册信息
+        /// </summary>
+        /// <param name="regists">注册信息集合</param>
+        /// <returns></returns>
+        [HttpPost("batch")]
+        public IActionResult CreateRegist(IEnumerable<RegistAddDto> regists)
+        {
+            if (!regists.Any())
+            {
+                throw new ArgumentNullException(nameof(regists));
+            }
+            var entities = _mapper.Map<IEnumerable<Regist>>(regists);
+            _registRepository.Add(entities);
+            _registRepository.SaveChanges();
+            var returnDtos = _mapper.Map<IEnumerable<RegistDto>>(entities);
+            var idsString = string.Join(",", returnDtos.Select(x => x.RegistId));
+
+            return CreatedAtRoute(nameof(GetRegistCollection), new { ids = idsString }, returnDtos);
+        }
+
         [HttpDelete("{ids}")]
         public async Task<IActionResult> DeleteRegist(
             [FromRoute]
