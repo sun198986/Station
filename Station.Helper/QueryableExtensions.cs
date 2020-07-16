@@ -2,57 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 
 namespace Station.Helper
 {
     public static class QueryableExtensions
     {
-        public static IQueryable<T> ApplySort<T>(
-            this IQueryable<T> source,
-            string orderBy,
-            Dictionary<string, PropertyMappingValue> mappingDictionary)
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string ordering)
         {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-            if (mappingDictionary == null)
-                throw new ArgumentNullException(nameof(mappingDictionary));
-            if (string.IsNullOrWhiteSpace(orderBy))
-                return source;
+            var type = typeof(T);
+            var property = type.GetProperty(ordering);
+            var parameter = Expression.Parameter(type, "p");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExp = Expression.Lambda(propertyAccess, parameter);
+            MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "OrderBy", new Type[] { type, property.PropertyType }, source.Expression, Expression.Quote(orderByExp));
+            return source.Provider.CreateQuery<T>(resultExp);
+        }
+        public static IQueryable<T> OrderByDescending<T>(this IQueryable<T> source, string ordering)
+        {
+            var type = typeof(T);
+            var property = type.GetProperty(ordering);
+            var parameter = Expression.Parameter(type, "p");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExp = Expression.Lambda(propertyAccess, parameter);
+            MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { type, property.PropertyType }, source.Expression, Expression.Quote(orderByExp));
+            return source.Provider.CreateQuery<T>(resultExp);
+        }
 
-            var orderByAfterSplit = orderBy.Split(',');
-            foreach (var orderByClause in orderByAfterSplit.Reverse())
-            {
-                var trimmedOrderByClause = orderByClause.Trim();
-                var orderByDescending = trimmedOrderByClause.EndsWith(" desc");
-                var indexOfFirstSpace = trimmedOrderByClause.IndexOf(" ", StringComparison.Ordinal);
-
-                var propertyName = indexOfFirstSpace == -1
-                    ? trimmedOrderByClause
-                    : trimmedOrderByClause.Remove(indexOfFirstSpace);
-
-                if (!mappingDictionary.ContainsKey(propertyName))
-                {
-                    throw new ArgumentException($"没有找到key为{propertyName}的映射");
-                }
-
-                var propertyMappingValue = mappingDictionary[propertyName];
-                if (propertyMappingValue == null)
-                {
-                    throw new ArgumentNullException(nameof(propertyMappingValue));
-                }
-
-                foreach (var destinationProperty in propertyMappingValue.DestinationProperties)
-                {
-                    if (propertyMappingValue.Revert)
-                    {
-                        orderByDescending = !orderByDescending;
-                    }
-
-                    source = source.OrderBy(destinationProperty + (orderByDescending ? " descending" : " ascending"));
-                }
-            }
-
-            return source;
+        public static IQueryable<T> ThenBy<T>(this IOrderedQueryable<T> source, string ordering)
+        {
+            var type = typeof(T);
+            var property = type.GetProperty(ordering);
+            var parameter = Expression.Parameter(type, "p");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExp = Expression.Lambda(propertyAccess, parameter);
+            MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "ThenBy", new Type[] { type, property.PropertyType }, source.Expression, Expression.Quote(orderByExp));
+            return source.Provider.CreateQuery<T>(resultExp);
+        }
+        public static IQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> source, string ordering)
+        {
+            var type = typeof(T);
+            var property = type.GetProperty(ordering);
+            var parameter = Expression.Parameter(type, "p");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExp = Expression.Lambda(propertyAccess, parameter);
+            MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "ThenByDescending", new Type[] { type, property.PropertyType }, source.Expression, Expression.Quote(orderByExp));
+            return source.Provider.CreateQuery<T>(resultExp);
         }
     }
 }

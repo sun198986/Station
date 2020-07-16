@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using Station.EFCore.IbmDb;
 using Station.Entity.DB2Admin;
+using Station.Repository.RepositoryPattern;
 
 namespace Station.Repository.StaionRegist.Implementation
 {

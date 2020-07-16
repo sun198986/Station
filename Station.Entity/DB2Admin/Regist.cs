@@ -10,7 +10,7 @@ namespace Station.Entity.DB2Admin
         [Key,Column("REGISTID")]
         public string RegistId { set; get; }
 
-        public DateTime RegistDate { set; get; }
+        public DateTime? RegistDate { set; get; }
 
         public string MaintainNumber { set; get; }
 

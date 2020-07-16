@@ -105,7 +105,7 @@ namespace Station.WebApi.Controllers
             if (employee == null) {
                 throw new ArgumentNullException(nameof(employee));
             }
-            var entity = await _employeeRepository.GetAsync(employeeId);
+            var entity = await _employeeRepository.GetSingleAsync(employeeId);
             if (entity == null) {
                 return NotFound($"id:{employeeId}没有查到数据");
             }

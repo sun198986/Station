@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -20,23 +21,43 @@ namespace Station.WebApi.Controllers
     {
         private readonly IRegistRepository _registRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
 
-        public RegistController(IRegistRepository registRepository, IMapper mapper,ILogger<RegistController> logger)
+        public RegistController(IRegistRepository registRepository, IMapper mapper)
         {
             _registRepository = registRepository ?? throw new ArgumentNullException(nameof(registRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _logger = logger?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// 查询注册信息
+        /// </summary>
+        /// <param name="fields">塑性字段</param>
+        /// <param name="search">查询条件 例: Name:孙,Age:1</param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetRegists([FromQuery] string fields)
+        public async Task<IActionResult> GetRegists([FromQuery] string fields,
+            [FromQuery] [ModelBinder(BinderType = typeof(DtoModelBinder<RegistSearchDto>))] RegistSearchDto search
+           )
         {
-            var entities = await _registRepository.GetRegistsAsync();
+            Expression<Func<Regist, bool>> expression = null;
+            if (search != null)
+            {
+                var entity = _mapper.Map<Regist>(search);
+                //Expression<Func<Regist, bool>> expression = m=>m.Phone=="123";
+                expression = entity.AsExpression();
+            }
+
+            var entities = await _registRepository.GetAsync(expression);
             var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
             return Ok(listDto.ShapeData(fields));
         }
 
+        /// <summary>
+        /// 按id的集合查询注册信息
+        /// </summary>
+        /// <param name="ids">id的集合 例:1,2,3,4</param>
+        /// <param name="fields">塑性字段</param>
+        /// <returns></returns>
         [HttpGet("{ids}", Name = nameof(GetRegistCollection))]
         public async Task<IActionResult> GetRegistCollection(
             [FromRoute]
@@ -58,6 +79,11 @@ namespace Station.WebApi.Controllers
             return Ok(listDto.ShapeData(fields));
         }
 
+        /// <summary>
+        /// 创建注册信息
+        /// </summary>
+        /// <param name="regist">注册信息</param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult CreateReigst(RegistAddDto regist)
         {
@@ -92,6 +118,11 @@ namespace Station.WebApi.Controllers
             return CreatedAtRoute(nameof(GetRegistCollection), new { ids = idsString }, returnDtos);
         }
 
+        /// <summary>
+        /// 根据id的集合删除注册信息
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
         [HttpDelete("{ids}")]
         public async Task<IActionResult> DeleteRegist(
             [FromRoute]
@@ -114,6 +145,12 @@ namespace Station.WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// 修改注册信息
+        /// </summary>
+        /// <param name="registId">主键id</param>
+        /// <param name="regist">注册信息</param>
+        /// <returns></returns>
         [HttpPut("{registId}")]
         public async Task<IActionResult> UpdateRegist([FromRoute]string registId,[FromBody]RegistUpdateDto regist)
         {

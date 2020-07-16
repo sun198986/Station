@@ -19,6 +19,10 @@ namespace Station.Models.RegistDto
                 .ForMember(dest => dest.Phone,
                     opt => opt.MapFrom(src => src.TelPhone));
 
+
+            CreateMap<RegistSearchDto, Regist>();
+
+
             //CreateMap<Regist, RegistDto>().ForAllMembers(opt => opt.Condition(srs => srs!=null));
         }
     }

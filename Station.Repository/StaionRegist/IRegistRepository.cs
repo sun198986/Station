@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Station.Entity.DB2Admin;
+using Station.Repository.RepositoryPattern;
 
 namespace Station.Repository.StaionRegist
 {
