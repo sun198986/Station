@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Station.Entity.DB2Admin;
 using Station.Helper;
+using Station.Models.BaseDto;
 using Station.Models.RegistDto;
 using Station.Repository;
+using Station.Repository.RepositoryPattern;
 using Station.Repository.StaionRegist;
 
 namespace Station.WebApi.Controllers
@@ -29,15 +31,35 @@ namespace Station.WebApi.Controllers
         }
 
         /// <summary>
+        /// 查询单个注册信息
+        /// </summary>
+        /// <param name="id">主键Id</param>
+        /// <param name="fields">塑形字段</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RegistDto>> GetRegist(string id,
+            [FromQuery] string fields)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var entity = await _registRepository.GetSingleAsync(id);
+            var returnDto = _mapper.Map<RegistDto>(entity);
+            return Ok(returnDto.ShapeData(fields));
+        }
+
+        /// <summary>
         /// 查询注册信息
         /// </summary>
-        /// <param name="fields">塑性字段</param>
         /// <param name="search">查询条件 例: Name:孙,Age:1</param>
+        /// <param name="fields">塑形字段</param>
+        /// <param name="sort">排序字段 orderByField</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetRegists([FromQuery] string fields,
-            [FromQuery] [ModelBinder(BinderType = typeof(DtoModelBinder<RegistSearchDto>))] RegistSearchDto search
-           )
+        public async Task<IActionResult> GetRegists(
+            [FromQuery,ModelBinder(BinderType = typeof(DtoModelBinder<RegistSearchDto>))] RegistSearchDto search,
+            [FromQuery] string fields,
+            [FromQuery] Sort sort
+        )
         {
             Expression<Func<Regist, bool>> expression = null;
             if (search != null)
@@ -47,7 +69,7 @@ namespace Station.WebApi.Controllers
                 expression = entity.AsExpression();
             }
 
-            var entities = await _registRepository.GetAsync(expression);
+            var entities = await _registRepository.GetAsync(expression,sort);
             var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
             return Ok(listDto.ShapeData(fields));
         }
@@ -56,13 +78,12 @@ namespace Station.WebApi.Controllers
         /// 按id的集合查询注册信息
         /// </summary>
         /// <param name="ids">id的集合 例:1,2,3,4</param>
-        /// <param name="fields">塑性字段</param>
+        /// <param name="fields">塑形字段</param>
         /// <returns></returns>
         [HttpGet("{ids}", Name = nameof(GetRegistCollection))]
         public async Task<IActionResult> GetRegistCollection(
-            [FromRoute]
-            [ModelBinder(BinderType = typeof(ArrayModelBinder))]
-            IEnumerable<string> ids, [FromQuery] string fields)
+            [FromRoute,ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<string> ids, 
+            [FromQuery] string fields)
         {
             if (ids == null)
                 return BadRequest();
@@ -119,12 +140,36 @@ namespace Station.WebApi.Controllers
         }
 
         /// <summary>
+        /// 删除单个注册信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("id")]
+        public async Task<IActionResult> DeleteRegist(string id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            var entity = await _registRepository.GetSingleAsync(id);
+            if (entity == null)
+            {
+                return NotFound(nameof(id) + id);
+            }
+
+            _registRepository.Delete(entity);
+            _registRepository.SaveChanges();
+            return NoContent();
+        }
+
+
+        /// <summary>
         /// 根据id的集合删除注册信息
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpDelete("{ids}")]
-        public async Task<IActionResult> DeleteRegist(
+        public async Task<IActionResult> DeleteRegists(
             [FromRoute]
             [ModelBinder(BinderType = typeof(ArrayModelBinder))]
             IEnumerable<string> ids)
@@ -152,7 +197,7 @@ namespace Station.WebApi.Controllers
         /// <param name="regist">注册信息</param>
         /// <returns></returns>
         [HttpPut("{registId}")]
-        public async Task<IActionResult> UpdateRegist([FromRoute]string registId,[FromBody]RegistUpdateDto regist)
+        public async Task<IActionResult> UpdateRegist([FromRoute] string registId, [FromBody] RegistUpdateDto regist)
         {
             if (registId == null)
                 throw new ArgumentNullException(nameof(registId));

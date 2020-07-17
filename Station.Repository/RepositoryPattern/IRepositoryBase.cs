@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Station.Models.BaseDto;
 
 namespace Station.Repository.RepositoryPattern
 {
     public interface IRepositoryBase<T>
     {
-
         Task<T> GetSingleAsync(params object[] primaryKey);
 
         Task<T> GetSingleAsync(string id);
-
 
         Task<T> GetSingleAsync(Expression<Func<T, bool>> filter);
 
         Task<IEnumerable<T>> GetAsync();
 
-
         Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids);
 
+        Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Sort sort);
+
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter);
+
+        Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter,Sort sort);
 
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, Pagination pagination);
 

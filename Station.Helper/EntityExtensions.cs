@@ -23,7 +23,7 @@ namespace Station.Helper
                 Expression left = Expression.Property(param, key);
                 Expression right = Expression.Constant(val, val.GetType());
                 Expression result=Expression.Equal(left, right);
-                filter = Expression.And(filter, result);
+                filter = Expression.Or(filter, result);
             }
 
             return Expression.Lambda<Func<T, bool>>(filter, param);
