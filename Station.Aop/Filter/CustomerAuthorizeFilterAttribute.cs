@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ServiceReference;
@@ -24,6 +25,8 @@ namespace Station.Aop.Filter
                     try
                     {
                         await tokenClient.ValidateGuidAsync(myToken);
+                        string currentUser = context.HttpContext.Session.GetString(myToken);
+
                     }
                     catch (Exception e)
                     {

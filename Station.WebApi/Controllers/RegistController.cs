@@ -119,7 +119,7 @@ namespace Station.WebApi.Controllers
         }
 
         /// <summary>
-        /// 批量更新注册信息
+        /// 批量创建注册信息
         /// </summary>
         /// <param name="regists">注册信息集合</param>
         /// <returns></returns>
@@ -130,7 +130,7 @@ namespace Station.WebApi.Controllers
             {
                 throw new ArgumentNullException(nameof(regists));
             }
-            var entities = _mapper.Map<IEnumerable<Regist>>(regists);
+            var entities = _mapper.Map<IList<Regist>>(regists);
             _registRepository.Add(entities);
             _registRepository.SaveChanges();
             var returnDtos = _mapper.Map<IEnumerable<RegistDto>>(entities);

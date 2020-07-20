@@ -32,7 +32,7 @@ namespace Station.Repository.RepositoryPattern
 
         void Add(T entity);
 
-        void Add(IEnumerable<T> entities);
+        void Add(IList<T> entities);
 
         void Delete(string id);
 
