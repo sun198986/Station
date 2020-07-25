@@ -5,9 +5,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Station.Helper;
-using Station.Models.BaseDto;
 
-namespace Station.Repository.RepositoryPattern
+namespace Station.Repository.RepositoryPattern.Implementation
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

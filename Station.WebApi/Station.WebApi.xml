@@ -4,14 +4,6 @@
         <name>Station.WebApi</name>
     </assembly>
     <members>
-        <member name="M:Station.WebApi.Controllers.RegistController.GetRegist(System.String,System.String)">
-            <summary>
-            查询单个注册信息
-            </summary>
-            <param name="id">主键Id</param>
-            <param name="fields">塑形字段</param>
-            <returns></returns>
-        </member>
         <member name="M:Station.WebApi.Controllers.RegistController.GetRegists(Station.Models.RegistDto.RegistSearchDto,System.String,Station.Repository.RepositoryPattern.Sort)">
             <summary>
             查询注册信息
