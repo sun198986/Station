@@ -2,6 +2,7 @@
 using Scrutor;
 using Station.EFCore.IbmDb;
 using Station.Repository.RepositoryPattern;
+using Station.Repository.RepositoryPattern.Implementation;
 
 namespace Station.Repository.Employee.Implementation
 {

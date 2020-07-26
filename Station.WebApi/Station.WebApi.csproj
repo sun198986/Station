@@ -6,7 +6,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
-    <DocumentationFile>E:\git\Station\Station.WebApi\Station.WebApi.xml</DocumentationFile>
+    <DocumentationFile>D:\Document\Station\Station.WebApi\Station.WebApi.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>

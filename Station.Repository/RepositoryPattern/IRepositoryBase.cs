@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Station.Models.BaseDto;
 
 namespace Station.Repository.RepositoryPattern
 {
@@ -32,7 +31,7 @@ namespace Station.Repository.RepositoryPattern
 
         void Add(T entity);
 
-        void Add(IEnumerable<T> entities);
+        void Add(IList<T> entities);
 
         void Delete(string id);
 

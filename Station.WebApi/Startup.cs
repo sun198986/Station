@@ -47,6 +47,7 @@ namespace Station.WebApi
             services.InitSwaggerConfig();
             //Etag »º´æ
             services.InitEtagConfig();
+            
             services.AddControllers(options =>
             {
                 options.CacheProfiles.Add("120sCacheProfile",new CacheProfile
@@ -105,6 +106,8 @@ namespace Station.WebApi
                     config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
                 newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
             });
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,6 +123,7 @@ namespace Station.WebApi
            
             app.UseHttpCacheHeaders();
 
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -128,6 +132,8 @@ namespace Station.WebApi
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSession();
         }
     }
 }

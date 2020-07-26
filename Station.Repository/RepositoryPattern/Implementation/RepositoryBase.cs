@@ -5,9 +5,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Station.Helper;
-using Station.Models.BaseDto;
 
-namespace Station.Repository.RepositoryPattern
+namespace Station.Repository.RepositoryPattern.Implementation
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
@@ -194,6 +193,7 @@ namespace Station.Repository.RepositoryPattern
         /// <param name="entity"></param>
         public virtual void Add(T entity)
         {
+            entity.GetType().GetProperty(typeof(T).Name + "Id")?.SetValue(entity, Guid.NewGuid().ToString());
             _dbSet.Add(entity);
         }
 
@@ -201,8 +201,13 @@ namespace Station.Repository.RepositoryPattern
         /// 添加entity集合
         /// </summary>
         /// <param name="entities"></param>
-        public virtual void Add(IEnumerable<T> entities)
+        public virtual void Add(IList<T> entities)
         {
+            //主键
+            foreach (var entity in entities)
+            {
+                entity.GetType().GetProperty(typeof(T).Name+"Id")?.SetValue(entity,Guid.NewGuid().ToString());
+            }
             _dbSet.AddRange(entities);
         }
 
@@ -211,7 +216,7 @@ namespace Station.Repository.RepositoryPattern
             var entity = _dbSet.FirstOrDefault(p => typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().Equals(id));
             if(entity==null)
                 throw new KeyNotFoundException($"{id}未找到数据");
-
+            
             Delete(entity);
         }
 

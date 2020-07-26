@@ -6,12 +6,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Station.Entity.DB2Admin;
 using Station.Helper;
-using Station.Models.BaseDto;
 using Station.Models.RegistDto;
-using Station.Repository;
 using Station.Repository.RepositoryPattern;
 using Station.Repository.StaionRegist;
 
@@ -30,22 +27,22 @@ namespace Station.WebApi.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        /// <summary>
-        /// 查询单个注册信息
-        /// </summary>
-        /// <param name="id">主键Id</param>
-        /// <param name="fields">塑形字段</param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RegistDto>> GetRegist(string id,
-            [FromQuery] string fields)
-        {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-            var entity = await _registRepository.GetSingleAsync(id);
-            var returnDto = _mapper.Map<RegistDto>(entity);
-            return Ok(returnDto.ShapeData(fields));
-        }
+        ///// <summary>
+        ///// 查询单个注册信息
+        ///// </summary>
+        ///// <param name="id">主键Id</param>
+        ///// <param name="fields">塑形字段</param>
+        ///// <returns></returns>
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<RegistDto>> GetRegist(string id,
+        //    [FromQuery] string fields)
+        //{
+        //    if (id == null)
+        //        throw new ArgumentNullException(nameof(id));
+        //    var entity = await _registRepository.GetSingleAsync(id);
+        //    var returnDto = _mapper.Map<RegistDto>(entity);
+        //    return Ok(returnDto.ShapeData(fields));
+        //}
 
         /// <summary>
         /// 查询注册信息
@@ -119,7 +116,7 @@ namespace Station.WebApi.Controllers
         }
 
         /// <summary>
-        /// 批量更新注册信息
+        /// 批量创建注册信息
         /// </summary>
         /// <param name="regists">注册信息集合</param>
         /// <returns></returns>
@@ -130,7 +127,7 @@ namespace Station.WebApi.Controllers
             {
                 throw new ArgumentNullException(nameof(regists));
             }
-            var entities = _mapper.Map<IEnumerable<Regist>>(regists);
+            var entities = _mapper.Map<IList<Regist>>(regists);
             _registRepository.Add(entities);
             _registRepository.SaveChanges();
             var returnDtos = _mapper.Map<IEnumerable<RegistDto>>(entities);

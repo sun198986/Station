@@ -4,11 +4,57 @@
         <name>Station.WebApi</name>
     </assembly>
     <members>
+        <member name="M:Station.WebApi.Controllers.RegistController.GetRegists(Station.Models.RegistDto.RegistSearchDto,System.String,Station.Repository.RepositoryPattern.Sort)">
+            <summary>
+            查询注册信息
+            </summary>
+            <param name="search">查询条件 例: Name:孙,Age:1</param>
+            <param name="fields">塑形字段</param>
+            <param name="sort">排序字段 orderByField</param>
+            <returns></returns>
+        </member>
+        <member name="M:Station.WebApi.Controllers.RegistController.GetRegistCollection(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            按id的集合查询注册信息
+            </summary>
+            <param name="ids">id的集合 例:1,2,3,4</param>
+            <param name="fields">塑形字段</param>
+            <returns></returns>
+        </member>
+        <member name="M:Station.WebApi.Controllers.RegistController.CreateReigst(Station.Models.RegistDto.RegistAddDto)">
+            <summary>
+            创建注册信息
+            </summary>
+            <param name="regist">注册信息</param>
+            <returns></returns>
+        </member>
         <member name="M:Station.WebApi.Controllers.RegistController.CreateRegist(System.Collections.Generic.IEnumerable{Station.Models.RegistDto.RegistAddDto})">
             <summary>
-            批量更新注册信息
+            批量创建注册信息
             </summary>
             <param name="regists">注册信息集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:Station.WebApi.Controllers.RegistController.DeleteRegist(System.String)">
+            <summary>
+            删除单个注册信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Station.WebApi.Controllers.RegistController.DeleteRegists(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            根据id的集合删除注册信息
+            </summary>
+            <param name="ids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Station.WebApi.Controllers.RegistController.UpdateRegist(System.String,Station.Models.RegistDto.RegistUpdateDto)">
+            <summary>
+            修改注册信息
+            </summary>
+            <param name="registId">主键id</param>
+            <param name="regist">注册信息</param>
             <returns></returns>
         </member>
     </members>
