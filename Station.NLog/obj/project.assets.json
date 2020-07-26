@@ -417,31 +417,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\j2356\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\33482\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\MyProject\\Station\\Station.NLog\\Station.NLog.csproj",
+      "projectUniqueName": "E:\\git\\Station\\Station.NLog\\Station.NLog.csproj",
       "projectName": "Station.NLog",
-      "projectPath": "E:\\MyProject\\Station\\Station.NLog\\Station.NLog.csproj",
-      "packagesPath": "C:\\Users\\j2356\\.nuget\\packages\\",
-      "outputPath": "E:\\MyProject\\Station\\Station.NLog\\obj\\",
+      "projectPath": "E:\\git\\Station\\Station.NLog\\Station.NLog.csproj",
+      "packagesPath": "C:\\Users\\33482\\.nuget\\packages\\",
+      "outputPath": "E:\\git\\Station\\Station.NLog\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\j2356\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.1.config",
+        "C:\\Users\\33482\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -490,7 +484,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
