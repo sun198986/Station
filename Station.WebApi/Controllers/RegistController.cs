@@ -27,74 +27,51 @@ namespace Station.WebApi.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        ///// <summary>
-        ///// 查询单个注册信息
-        ///// </summary>
-        ///// <param name="id">主键Id</param>
-        ///// <param name="fields">塑形字段</param>
-        ///// <returns></returns>
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<RegistDto>> GetRegist(string id,
-        //    [FromQuery] string fields)
-        //{
-        //    if (id == null)
-        //        throw new ArgumentNullException(nameof(id));
-        //    var entity = await _registRepository.GetSingleAsync(id);
-        //    var returnDto = _mapper.Map<RegistDto>(entity);
-        //    return Ok(returnDto.ShapeData(fields));
-        //}
+        /// <summary>
+        /// 查询单个注册信息
+        /// </summary>
+        /// <param name="id">主键Id</param>
+        /// <param name="fields">塑形字段</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RegistDto>> GetRegist(string id,
+            [FromQuery] string fields)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+            var entity = await _registRepository.GetSingleAsync(id);
+            var returnDto = _mapper.Map<RegistDto>(entity);
+            return Ok(returnDto.ShapeData(fields));
+        }
 
         /// <summary>
         /// 查询注册信息
         /// </summary>
-        /// <param name="search">查询条件 例: Name:孙,Age:1</param>
-        /// <param name="fields">塑形字段</param>
-        /// <param name="sort">排序字段 orderByField</param>
+        /// <param name="registDtoP">查询条件 例: Name:孙,Age:1</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetRegists(
-            [FromQuery,ModelBinder(BinderType = typeof(DtoModelBinder<RegistSearchDto>))] RegistSearchDto search,
-            [FromQuery] string fields,
-            [FromQuery] Sort sort
+        [HttpGet(Name = nameof(GetRegistCollection))]
+        public async Task<IActionResult> GetRegistCollection(
+            [FromQuery]RegistDtoParameter registDtoP
         )
         {
             Expression<Func<Regist, bool>> expression = null;
-            if (search != null)
+
+            if (registDtoP.Search != null)
             {
-                var entity = _mapper.Map<Regist>(search);
+                var entity = _mapper.Map<Regist>(registDtoP.Search);
                 //Expression<Func<Regist, bool>> expression = m=>m.Phone=="123";
                 expression = entity.AsExpression();
             }
 
-            var entities = await _registRepository.GetAsync(expression,sort);
-            var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
-            return Ok(listDto.ShapeData(fields));
-        }
-
-        /// <summary>
-        /// 按id的集合查询注册信息
-        /// </summary>
-        /// <param name="ids">id的集合 例:1,2,3,4</param>
-        /// <param name="fields">塑形字段</param>
-        /// <returns></returns>
-        [HttpGet("{ids}", Name = nameof(GetRegistCollection))]
-        public async Task<IActionResult> GetRegistCollection(
-            [FromRoute,ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<string> ids, 
-            [FromQuery] string fields)
-        {
-            if (ids == null)
-                return BadRequest();
-
-            var entities = await _registRepository.GetRegistsAsync(ids);
-
-            if (ids.Count() != entities.Count())
+            var entities = await _registRepository.GetAsync(registDtoP.Ids, expression);
+            if (registDtoP.Ids!=null && registDtoP.Ids.Count() != entities.Count())
             {
-                List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
+                List<string> idNotFounds = registDtoP.Ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
                 return NotFound(JsonSerializer.Serialize(idNotFounds));
             }
 
             var listDto = _mapper.Map<IEnumerable<RegistDto>>(entities);
-            return Ok(listDto.ShapeData(fields));
+            return Ok(listDto.ShapeData(registDtoP.Fields));
         }
 
         /// <summary>

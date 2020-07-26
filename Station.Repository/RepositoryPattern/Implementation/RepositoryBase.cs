@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Station.Helper;
 
@@ -102,6 +103,20 @@ namespace Station.Repository.RepositoryPattern.Implementation
             if (sort.OrderBy) return await result.OrderBy(sort.OrderByField).ToListAsync();
             return await result.OrderByDescending(sort.OrderByField).ToListAsync();
         }
+
+        public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter)
+        {
+            if (filter == null&& ids==null)
+                return await _dbSet.ToListAsync();
+            IQueryable<T> result = null;
+            if(ids!=null)
+                result = _dbSet.AsQueryable().Where(p => ids.Contains(typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().TrimEnd()));
+            if (filter != null)
+                result ??= _dbSet.Where(filter);
+
+            return await result.ToListAsync();
+        }
+
 
         /// <summary>
         /// 根据条件异步获取entity集合

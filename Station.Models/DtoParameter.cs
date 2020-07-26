@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Station.Helper;
 
 namespace Station.Models
 {
@@ -8,7 +10,7 @@ namespace Station.Models
 
         public string OrderBy { get; set; }
 
-        public string Search { get; set; }
-
+        [ModelBinder(BinderType = typeof(ArrayModelBinder))]
+        public IEnumerable<string> Ids { get; set; }
     }
 }

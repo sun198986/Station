@@ -22,8 +22,8 @@ namespace Station.Helper
                     continue;
                 Expression left = Expression.Property(param, key);
                 Expression right = Expression.Constant(val, val.GetType());
-                Expression result=Expression.Equal(left, right);
-                filter = Expression.Or(filter, result);
+                Expression result=Expression.Call(left, typeof(string).GetMethod("Contains", new Type[] { typeof(string) }) ?? throw new InvalidOperationException(), right);
+                filter = Expression.And(filter, result);
             }
 
             return Expression.Lambda<Func<T, bool>>(filter, param);

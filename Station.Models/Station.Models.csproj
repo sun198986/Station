@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Station.Entity\Station.Entity.csproj" />
+    <ProjectReference Include="..\Station.Helper\Station.Helper.csproj" />
   </ItemGroup>
 
 </Project>

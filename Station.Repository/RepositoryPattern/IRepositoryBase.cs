@@ -17,6 +17,8 @@ namespace Station.Repository.RepositoryPattern
 
         Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids);
 
+        Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter);
+
         Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Sort sort);
 
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter);
