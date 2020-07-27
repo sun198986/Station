@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Station.Aop\Station.Aop.csproj" />
     <ProjectReference Include="..\Station.EFCore\Station.EFCore.csproj" />
     <ProjectReference Include="..\Station.Entity\Station.Entity.csproj" />
     <ProjectReference Include="..\Station.Helper\Station.Helper.csproj" />

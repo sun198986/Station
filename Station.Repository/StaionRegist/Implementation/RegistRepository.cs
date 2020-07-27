@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
+using Station.Aop;
+using Station.Aop.Filter;
 using Station.EFCore.IbmDb;
 using Station.Entity.DB2Admin;
+using Station.Entity.DB2AdminPattern;
 using Station.Repository.Employee;
 using Station.Repository.RepositoryPattern;
 using Station.Repository.RepositoryPattern.Implementation;
@@ -17,10 +20,12 @@ namespace Station.Repository.StaionRegist.Implementation
     public class RegistRepository:RepositoryBase<Regist>,IRegistRepository
     {
         private IbmDbContext _context;
+        private readonly IApplicationContext _applicationContext;
 
-        public RegistRepository(IbmDbContext context):base(context)
+        public RegistRepository(IbmDbContext context, IApplicationContext applicationContext) :base(context, applicationContext)
         {
             _context = context;
+            _applicationContext = applicationContext;
         }
 
         public async Task<Regist> GetSingleRegistAndEmployeeAsync(string registId)
@@ -66,6 +71,18 @@ namespace Station.Repository.StaionRegist.Implementation
             }
 
             regist.RegistId = Guid.NewGuid().ToString();
+
+            if (regist is EditorEntity editor)
+            {
+                if (_applicationContext.CurrentUser != null)
+                {
+                    editor.CreateDate = DateTime.Now.Date;
+                    editor.UpdateDate = DateTime.Now.Date;
+                    editor.Creator = _applicationContext.CurrentUser.UserName;
+                    editor.Updater = _applicationContext.CurrentUser.UserName;
+                }
+            }
+
             _context.Regists.Add(regist);
             //_context.SaveChanges();
         }
@@ -80,6 +97,16 @@ namespace Station.Repository.StaionRegist.Implementation
             foreach (var regist in regists)
             {
                 regist.RegistId = Guid.NewGuid().ToString();
+                if (regist is EditorEntity editor)
+                {
+                    if (_applicationContext.CurrentUser != null)
+                    {
+                        editor.CreateDate = DateTime.Now.Date;
+                        editor.UpdateDate = DateTime.Now.Date;
+                        editor.Creator = _applicationContext.CurrentUser.UserName;
+                        editor.Updater = _applicationContext.CurrentUser.UserName;
+                    }
+                }
             }
             _context.Regists.AddRange(regists);
         }

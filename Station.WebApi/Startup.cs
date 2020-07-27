@@ -1,9 +1,7 @@
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
 using IBM.EntityFrameworkCore;
-using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,9 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Station.Aop;
 using Station.Aop.Filter;
 using Station.EFCore.IbmDb;
 using Station.ETag;
@@ -94,6 +91,7 @@ namespace Station.WebApi
 
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("Station.Repository"))
                .AddClasses().UsingAttributes());//³ÌÐò¼¯×¢Èë
+            services.AddScoped<IApplicationContext, ApplicationContext>();
 
             services.AddAutoMapper(config =>
             {
@@ -103,7 +101,7 @@ namespace Station.WebApi
             services.Configure<MvcOptions>(config =>
             {
                 var newtonSoftJsonOutputFormatter =
-                    config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
+                    config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>().FirstOrDefault();
                 newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
             });
             services.AddDistributedMemoryCache();
@@ -123,6 +121,7 @@ namespace Station.WebApi
            
             app.UseHttpCacheHeaders();
 
+            app.UseSession();
 
             app.UseRouting();
 
@@ -132,8 +131,6 @@ namespace Station.WebApi
             {
                 endpoints.MapControllers();
             });
-
-            app.UseSession();
         }
     }
 }

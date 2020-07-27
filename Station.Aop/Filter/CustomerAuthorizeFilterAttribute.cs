@@ -6,12 +6,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using ServiceReference;
 
 namespace Station.Aop.Filter
 {
     public class CustomerAuthorizeFilterAttribute: Attribute,IAsyncAuthorizationFilter, IFilterMetadata
     {
+        private readonly IApplicationContext _applicationContext;
+
+        public CustomerAuthorizeFilterAttribute(IApplicationContext applicationContext)
+        {
+            _applicationContext = applicationContext;
+        }
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             if (!((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor) context.ActionDescriptor)
@@ -26,7 +33,8 @@ namespace Station.Aop.Filter
                     {
                         await tokenClient.ValidateGuidAsync(myToken);
                         string currentUser = context.HttpContext.Session.GetString(myToken);
-
+                        _applicationContext.CurrentUser =
+                            System.Text.Json.JsonSerializer.Deserialize<UserInfo>(currentUser);
                     }
                     catch (Exception e)
                     {

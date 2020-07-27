@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Station.Entity.DB2AdminPattern;
 
 namespace Station.Entity.DB2Admin
 {
     [Db2AdminTable("TestRegist")]
-    public class Regist
+    public class Regist:EditorEntity
     {
         [Key,Column("REGISTID")]
         public string RegistId { set; get; }

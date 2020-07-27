@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Station.Aop;
+using Station.Entity.DB2AdminPattern;
 using Station.Helper;
 using Station.Repository.RepositoryPattern.SortApply;
 
@@ -13,11 +15,13 @@ namespace Station.Repository.RepositoryPattern.Implementation
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         private readonly DbContext _dbContext;
+        private readonly IApplicationContext _applicationContext;
         private readonly DbSet<T> _dbSet;
 
-        public RepositoryBase(DbContext dbContext)
+        public RepositoryBase(DbContext dbContext, IApplicationContext applicationContext)
         {
             _dbContext = dbContext;
+            _applicationContext = applicationContext;
             _dbSet = dbContext.Set<T>();
         }
 
@@ -126,7 +130,7 @@ namespace Station.Repository.RepositoryPattern.Implementation
             if (ids != null)
                 result = _dbSet.AsQueryable().Where(p => ids.Contains(typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().TrimEnd()));
             if (filter != null)
-                result = result ==null? _dbSet.Where(filter):result.Where(filter);
+                result = result == null ? _dbSet.Where(filter) : result.Where(filter);
             if (orderBy != null)
                 result = result.ApplySort(orderBy, propertyMapping);
 
@@ -225,6 +229,17 @@ namespace Station.Repository.RepositoryPattern.Implementation
         public virtual void Add(T entity)
         {
             entity.GetType().GetProperty(typeof(T).Name + "Id")?.SetValue(entity, Guid.NewGuid().ToString());
+            if (entity is EditorEntity editor)
+            {
+                if (_applicationContext.CurrentUser != null)
+                {
+                    editor.CreateDate = DateTime.Now.Date;
+                    editor.UpdateDate = DateTime.Now.Date;
+                    editor.Creator = _applicationContext.CurrentUser.UserName;
+                    editor.Updater = _applicationContext.CurrentUser.UserName;
+                }
+            }
+
             _dbSet.Add(entity);
         }
 
@@ -238,6 +253,16 @@ namespace Station.Repository.RepositoryPattern.Implementation
             foreach (var entity in entities)
             {
                 entity.GetType().GetProperty(typeof(T).Name + "Id")?.SetValue(entity, Guid.NewGuid().ToString());
+                if (entity is EditorEntity editor)
+                {
+                    if (_applicationContext.CurrentUser != null)
+                    {
+                        editor.CreateDate = DateTime.Now.Date;
+                        editor.UpdateDate = DateTime.Now.Date;
+                        editor.Creator = _applicationContext.CurrentUser.UserName;
+                        editor.Updater = _applicationContext.CurrentUser.UserName;
+                    }
+                }
             }
             _dbSet.AddRange(entities);
         }
