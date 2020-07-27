@@ -9,9 +9,11 @@ using Station.Repository.Employee;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Station.Models.RegistDto;
+using Station.Repository.RepositoryPattern.SortApply;
 
 namespace Station.WebApi.Controllers
 {
@@ -22,40 +24,57 @@ namespace Station.WebApi.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IRegistRepository _registRepository;
         private readonly IMapper _mapper;
+        private readonly IPropertyMappingService _propertyMappingService;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, IRegistRepository registRepository, IMapper mapper)
+        public EmployeeController(IEmployeeRepository employeeRepository, IRegistRepository registRepository, IMapper mapper, IPropertyMappingService propertyMappingService)
         {
             this._employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             this._registRepository = registRepository ?? throw new ArgumentNullException(nameof(registRepository));
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _propertyMappingService = propertyMappingService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<EmployeeDto>> GetEmployees([FromQuery] string fields) {
-            var entities = await _employeeRepository.GetAsync();
-            var listDto = _mapper.Map<IEnumerable<EmployeeDto>>(entities);
-            return Ok(listDto.ShapeData(fields));
-        }
-
-        [HttpGet("{ids}", Name = nameof(GetEmployeeCollection))]
-        public async Task<ActionResult<EmployeeDto>> GetEmployeeCollection(
-            [FromRoute]
-            [ModelBinder(BinderType = typeof(ArrayModelBinder))]
-            IEnumerable<string> ids, [FromQuery] string fields)
-        {
-            if (ids == null)
-                return BadRequest();
-
-            var entities = await _employeeRepository.GetAsync(ids);
-
-            if (ids.Count() != entities.Count())
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEmployees(string id,[FromQuery] string fields) {
+            if (id == null)
             {
-                List<string> idNotFounds = ids.Where(x => !entities.Select(p => p.EmployeeId).ToList().Contains(x)).ToList();
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var entity = await _employeeRepository.GetSingleAsync(id);
+            var returnDto = _mapper.Map<IEnumerable<EmployeeDto>>(entity);
+            return Ok(returnDto.ShapeData(fields));
+        }
+
+        [HttpGet(Name = nameof(GetEmployeeCollection))]
+        public async Task<ActionResult<EmployeeDto>> GetEmployeeCollection(
+            [FromQuery] EmployeeDtoParameter employeeDtoParameter)
+        {
+            Expression<Func<Employee, bool>> expression = null;
+
+            if (employeeDtoParameter.Search != null)
+            {
+                var entity = _mapper.Map<Employee>(employeeDtoParameter.Search);
+                //Expression<Func<Regist, bool>> expression = m=>m.Phone=="123";
+                expression = entity.AsExpression();
+            }
+
+            Dictionary<string, PropertyMappingValue> mappingDictionary = null;
+
+            if (employeeDtoParameter.OrderBy != null)
+            {
+                mappingDictionary = _propertyMappingService.GetPropertyMapping<EmployeeDto, Employee>();
+            }
+
+            var entities = await _employeeRepository.GetAsync(employeeDtoParameter.Ids, expression, employeeDtoParameter.OrderBy, mappingDictionary);
+            if (employeeDtoParameter.Ids != null && employeeDtoParameter.Ids.Count() != entities.Count())
+            {
+                List<string> idNotFounds = employeeDtoParameter.Ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
                 return NotFound(JsonSerializer.Serialize(idNotFounds));
             }
 
             var listDto = _mapper.Map<IEnumerable<EmployeeDto>>(entities);
-            return Ok(listDto.ShapeData(fields));
+            return Ok(listDto.ShapeData(employeeDtoParameter.Fields));
         }
 
         [HttpPost]
@@ -76,6 +95,32 @@ namespace Station.WebApi.Controllers
             _employeeRepository.Add(entity);
             _employeeRepository.SaveChanges();
             return NoContent();
+        }
+
+        [HttpPost("batch")]
+        public async Task<IActionResult> CreateEmployeeForRegist(string registId, IEnumerable<EmployeeAddDto> employees)
+        {
+
+            if (string.IsNullOrWhiteSpace(registId))
+            {
+                throw new ArgumentNullException(nameof(registId));
+            }
+
+            if (!await _registRepository.RegistExistsAsync(registId))
+            {
+                return NotFound();
+            }
+
+            var entities = _mapper.Map<IList<Employee>>(employees);
+            foreach (var employee in entities)
+            {
+                employee.RegistId = registId;
+            }
+            _employeeRepository.Add(entities);
+            _employeeRepository.SaveChanges();
+            var returnDtos = _mapper.Map<IEnumerable<EmployeeDto>>(entities);
+            var idsString = string.Join(",", returnDtos.Select(x => x.EmployeeId));
+            return CreatedAtRoute(nameof(GetEmployeeCollection), new { ids = idsString }, returnDtos);
         }
 
         [HttpDelete("{ids}")]

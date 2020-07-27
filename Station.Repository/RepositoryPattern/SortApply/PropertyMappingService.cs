@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
 using Station.Entity.DB2Admin;
 using Station.Models.EmployeeDto;
 using Station.Models.RegistDto;
+using Station.Repository.Employee;
 
 namespace Station.Repository.RepositoryPattern.SortApply
 {
+    [ServiceDescriptor(typeof(IPropertyMappingService), ServiceLifetime.Transient)]
     public class PropertyMappingService : IPropertyMappingService
     {
         private readonly Dictionary<string, PropertyMappingValue> _registPropertyMapping =
@@ -18,7 +22,7 @@ namespace Station.Repository.RepositoryPattern.SortApply
                 {"CustomName",new PropertyMappingValue(new List<string>{"CustomName"})},
                 {"Address",new PropertyMappingValue(new List<string>{"Address"})},
                 {"Linkman",new PropertyMappingValue(new List<string>{"Linkman"})},
-                {"Phone",new PropertyMappingValue(new List<string>{"Phone"})},
+                {"TelPhone",new PropertyMappingValue(new List<string>{"Phone"})},
                 {"Fax",new PropertyMappingValue(new List<string>{"Fax"})}
             };
 

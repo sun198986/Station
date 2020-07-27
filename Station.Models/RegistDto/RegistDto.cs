@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Station.Models.RegistDto
 {
@@ -19,5 +20,7 @@ namespace Station.Models.RegistDto
         public string TelPhone { get; set; }
 
         public string Fax { get; set; }
+
+        public IEnumerable<EmployeeDto.EmployeeDto> Employees { get; set; }
     }
 }

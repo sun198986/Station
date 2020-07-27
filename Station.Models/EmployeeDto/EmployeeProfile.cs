@@ -10,6 +10,7 @@ namespace Station.Models.EmployeeDto
             CreateMap<Employee,EmployeeDto>();
             CreateMap<EmployeeAddDto, Employee>();
             CreateMap<EmployeeUpdateDto, Employee>();
+            CreateMap<EmployeeSearchDto, Employee>();
             //CreateMap<Regist, RegistDto>().ForAllMembers(opt => opt.Condition(srs => srs!=null));
         }
     }

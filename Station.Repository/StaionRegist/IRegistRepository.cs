@@ -14,6 +14,13 @@ namespace Station.Repository.StaionRegist
         Task<IEnumerable<Regist>> GetRegistsAsync();
 
         /// <summary>
+        /// 获取注册信息关联子表信息
+        /// </summary>
+        /// <param name="registId"></param>
+        /// <returns></returns>
+        Task<Regist> GetSingleRegistAndEmployeeAsync(string registId);
+
+        /// <summary>
         /// 根据id获取信息
         /// </summary>
         /// <param name="registId"></param>

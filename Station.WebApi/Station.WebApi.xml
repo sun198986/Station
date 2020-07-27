@@ -4,21 +4,19 @@
         <name>Station.WebApi</name>
     </assembly>
     <members>
-        <member name="M:Station.WebApi.Controllers.RegistController.GetRegists(Station.Models.RegistDto.RegistSearchDto,System.String,Station.Repository.RepositoryPattern.Sort)">
+        <member name="M:Station.WebApi.Controllers.RegistController.GetRegist(System.String,System.String)">
+            <summary>
+            查询单个注册信息
+            </summary>
+            <param name="id">主键Id</param>
+            <param name="fields">塑形字段</param>
+            <returns></returns>
+        </member>
+        <member name="M:Station.WebApi.Controllers.RegistController.GetRegistCollection(Station.Models.RegistDto.RegistDtoParameter)">
             <summary>
             查询注册信息
             </summary>
-            <param name="search">查询条件 例: Name:孙,Age:1</param>
-            <param name="fields">塑形字段</param>
-            <param name="sort">排序字段 orderByField</param>
-            <returns></returns>
-        </member>
-        <member name="M:Station.WebApi.Controllers.RegistController.GetRegistCollection(System.Collections.Generic.IEnumerable{System.String},System.String)">
-            <summary>
-            按id的集合查询注册信息
-            </summary>
-            <param name="ids">id的集合 例:1,2,3,4</param>
-            <param name="fields">塑形字段</param>
+            <param name="registDtoP">查询条件 例: Name:孙,Age:1</param>
             <returns></returns>
         </member>
         <member name="M:Station.WebApi.Controllers.RegistController.CreateReigst(Station.Models.RegistDto.RegistAddDto)">

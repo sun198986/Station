@@ -10,6 +10,7 @@ using Station.Entity.DB2Admin;
 using Station.Helper;
 using Station.Models.RegistDto;
 using Station.Repository.RepositoryPattern;
+using Station.Repository.RepositoryPattern.SortApply;
 using Station.Repository.StaionRegist;
 
 namespace Station.WebApi.Controllers
@@ -20,11 +21,13 @@ namespace Station.WebApi.Controllers
     {
         private readonly IRegistRepository _registRepository;
         private readonly IMapper _mapper;
+        private readonly IPropertyMappingService _propertyMappingService;
 
-        public RegistController(IRegistRepository registRepository, IMapper mapper)
+        public RegistController(IRegistRepository registRepository, IMapper mapper, IPropertyMappingService propertyMappingService)
         {
             _registRepository = registRepository ?? throw new ArgumentNullException(nameof(registRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _propertyMappingService = propertyMappingService;
         }
 
         /// <summary>
@@ -63,7 +66,14 @@ namespace Station.WebApi.Controllers
                 expression = entity.AsExpression();
             }
 
-            var entities = await _registRepository.GetAsync(registDtoP.Ids, expression);
+            Dictionary<string, PropertyMappingValue> mappingDictionary = null;
+
+            if (registDtoP.OrderBy != null)
+            {
+                mappingDictionary = _propertyMappingService.GetPropertyMapping<RegistDto, Regist>();
+            }
+
+            var entities = await _registRepository.GetAsync(registDtoP.Ids, expression,registDtoP.OrderBy,mappingDictionary);
             if (registDtoP.Ids!=null && registDtoP.Ids.Count() != entities.Count())
             {
                 List<string> idNotFounds = registDtoP.Ids.Where(x => !entities.Select(p => p.RegistId).ToList().Contains(x)).ToList();
@@ -187,6 +197,16 @@ namespace Station.WebApi.Controllers
             _registRepository.UpdateRegist(entity);
             _registRepository.SaveChanges();
             return NoContent();
+        }
+
+        [HttpGet("includeEmployee/{registId}")]
+        public async Task<IActionResult> GetRegistIncludeEmplyee(string registId)
+        {
+            if (registId == null)
+                throw new ArgumentNullException(nameof(registId));
+            var entity = await _registRepository.GetSingleRegistAndEmployeeAsync(registId);
+            var returnDto = _mapper.Map<RegistDto>(entity);
+            return Ok(returnDto);
         }
     }
 }

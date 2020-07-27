@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Station.Helper;
+using Station.Repository.RepositoryPattern.SortApply;
 
 namespace Station.Repository.RepositoryPattern.Implementation
 {
@@ -106,13 +107,28 @@ namespace Station.Repository.RepositoryPattern.Implementation
 
         public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter)
         {
-            if (filter == null&& ids==null)
+            if (filter == null && ids == null)
                 return await _dbSet.ToListAsync();
             IQueryable<T> result = null;
-            if(ids!=null)
+            if (ids != null)
                 result = _dbSet.AsQueryable().Where(p => ids.Contains(typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().TrimEnd()));
             if (filter != null)
                 result ??= _dbSet.Where(filter);
+
+            return await result.ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter, string orderBy, Dictionary<string, PropertyMappingValue> propertyMapping)
+        {
+            if (filter == null && ids == null)
+                return await _dbSet.ToListAsync();
+            IQueryable<T> result = null;
+            if (ids != null)
+                result = _dbSet.AsQueryable().Where(p => ids.Contains(typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().TrimEnd()));
+            if (filter != null)
+                result = result ==null? _dbSet.Where(filter):result.Where(filter);
+            if (orderBy != null)
+                result = result.ApplySort(orderBy, propertyMapping);
 
             return await result.ToListAsync();
         }
@@ -221,7 +237,7 @@ namespace Station.Repository.RepositoryPattern.Implementation
             //主键
             foreach (var entity in entities)
             {
-                entity.GetType().GetProperty(typeof(T).Name+"Id")?.SetValue(entity,Guid.NewGuid().ToString());
+                entity.GetType().GetProperty(typeof(T).Name + "Id")?.SetValue(entity, Guid.NewGuid().ToString());
             }
             _dbSet.AddRange(entities);
         }
@@ -229,9 +245,9 @@ namespace Station.Repository.RepositoryPattern.Implementation
         public virtual void Delete(string id)
         {
             var entity = _dbSet.FirstOrDefault(p => typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().Equals(id));
-            if(entity==null)
+            if (entity == null)
                 throw new KeyNotFoundException($"{id}未找到数据");
-            
+
             Delete(entity);
         }
 

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using Station.EFCore.IbmDb;
 using Station.Entity.DB2Admin;
+using Station.Repository.Employee;
 using Station.Repository.RepositoryPattern;
 using Station.Repository.RepositoryPattern.Implementation;
 
@@ -20,6 +21,13 @@ namespace Station.Repository.StaionRegist.Implementation
         public RegistRepository(IbmDbContext context):base(context)
         {
             _context = context;
+        }
+
+        public async Task<Regist> GetSingleRegistAndEmployeeAsync(string registId)
+        {
+            var regist = await _context.Regists.Include(x => x.Employees).Where(p => p.RegistId == registId)
+                .FirstOrDefaultAsync();
+            return regist;
         }
 
         public async Task<IEnumerable<Regist>> GetRegistsAsync()
@@ -109,7 +117,6 @@ namespace Station.Repository.StaionRegist.Implementation
             }
             return await _context.Regists.Where(x => x.RegistId.Trim() == registId).FirstOrDefaultAsync()!=null;
         }
-
 
         public async Task<bool> SaveAsync()
         {

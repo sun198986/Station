@@ -3,7 +3,7 @@ using Station.Helper;
 
 namespace Station.Models.RegistDto
 {
-    public class RegistDtoParameter:DtoParameter
+    public class RegistDtoParameter: DtoParameter
     {
         /// <summary>
         /// 查询参数

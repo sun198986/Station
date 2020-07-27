@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Station.Repository.RepositoryPattern.SortApply;
 
 namespace Station.Repository.RepositoryPattern
 {
@@ -18,6 +19,8 @@ namespace Station.Repository.RepositoryPattern
         Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids);
 
         Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter);
+
+        Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter, string orderBy, Dictionary<string, PropertyMappingValue> propertyMapping);
 
         Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Sort sort);
 

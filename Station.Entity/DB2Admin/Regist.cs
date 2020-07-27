@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,6 +24,8 @@ namespace Station.Entity.DB2Admin
         public string Phone { get; set; }
 
         public string Fax { get; set; }
+
+        public IEnumerable<Employee> Employees { get; set; }
 
         // public string OM1 { set; get; }
 
