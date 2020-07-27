@@ -7,7 +7,7 @@ using Station.Entity.DB2AdminPattern;
 namespace Station.Entity.DB2Admin
 {
     [Db2AdminTable("TestRegist")]
-    public class Regist:EditorEntity
+    public class Regist
     {
         [Key,Column("REGISTID")]
         public string RegistId { set; get; }

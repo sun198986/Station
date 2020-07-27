@@ -72,17 +72,6 @@ namespace Station.Repository.StaionRegist.Implementation
 
             regist.RegistId = Guid.NewGuid().ToString();
 
-            if (regist is EditorEntity editor)
-            {
-                if (_applicationContext.CurrentUser != null)
-                {
-                    editor.CreateDate = DateTime.Now.Date;
-                    editor.UpdateDate = DateTime.Now.Date;
-                    editor.Creator = _applicationContext.CurrentUser.UserName;
-                    editor.Updater = _applicationContext.CurrentUser.UserName;
-                }
-            }
-
             _context.Regists.Add(regist);
             //_context.SaveChanges();
         }
@@ -97,16 +86,6 @@ namespace Station.Repository.StaionRegist.Implementation
             foreach (var regist in regists)
             {
                 regist.RegistId = Guid.NewGuid().ToString();
-                if (regist is EditorEntity editor)
-                {
-                    if (_applicationContext.CurrentUser != null)
-                    {
-                        editor.CreateDate = DateTime.Now.Date;
-                        editor.UpdateDate = DateTime.Now.Date;
-                        editor.Creator = _applicationContext.CurrentUser.UserName;
-                        editor.Updater = _applicationContext.CurrentUser.UserName;
-                    }
-                }
             }
             _context.Regists.AddRange(regists);
         }
