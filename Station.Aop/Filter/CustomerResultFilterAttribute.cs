@@ -15,7 +15,6 @@ namespace Station.Aop.Filter
         //验证客户端是否已经获取了数据
         public override void OnResultExecuted(ResultExecutedContext context)
         {
-            _logger.LogInformation("test");
             base.OnResultExecuted(context);
         }
 

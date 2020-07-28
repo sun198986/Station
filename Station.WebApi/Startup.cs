@@ -15,9 +15,11 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Station.Aop;
 using Station.Aop.Filter;
+using Station.AppSettings;
 using Station.EFCore.IbmDb;
 using Station.ETag;
 using Station.Swagger;
+using Station.WcfAdapter;
 
 namespace Station.WebApi
 {
@@ -44,7 +46,12 @@ namespace Station.WebApi
             services.InitSwaggerConfig();
             //Etag »º´æ
             services.InitEtagConfig();
-            
+
+            services.Configure<Settings>(options =>
+            {
+                options.WcfUrl = Configuration.GetSection("Setting:WcfUrl").Value;
+            });
+
             services.AddControllers(options =>
             {
                 options.CacheProfiles.Add("120sCacheProfile",new CacheProfile
@@ -92,6 +99,7 @@ namespace Station.WebApi
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("Station.Repository"))
                .AddClasses().UsingAttributes());//³ÌÐò¼¯×¢Èë
             services.AddScoped<IApplicationContext, ApplicationContext>();
+            services.AddScoped<IWcfAdapter, WcfAdapter.WcfAdapter>();
 
             services.AddAutoMapper(config =>
             {

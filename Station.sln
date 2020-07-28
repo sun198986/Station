@@ -43,7 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.EFCore", "Station.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.ETag", "Station.ETag\Station.ETag.csproj", "{1A9128A7-C4B9-4147-95C5-226646F7D3CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.Swagger", "Station.Swagger\Station.Swagger.csproj", "{8AD8F286-0FFE-4B8A-8E50-842627F31A62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.Swagger", "Station.Swagger\Station.Swagger.csproj", "{8AD8F286-0FFE-4B8A-8E50-842627F31A62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.AppSettings", "Station.AppSettings\Station.AppSettings.csproj", "{50CE79C9-9C0A-4F8E-B58E-54D737E1B13C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{8AD8F286-0FFE-4B8A-8E50-842627F31A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AD8F286-0FFE-4B8A-8E50-842627F31A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AD8F286-0FFE-4B8A-8E50-842627F31A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50CE79C9-9C0A-4F8E-B58E-54D737E1B13C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50CE79C9-9C0A-4F8E-B58E-54D737E1B13C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50CE79C9-9C0A-4F8E-B58E-54D737E1B13C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50CE79C9-9C0A-4F8E-B58E-54D737E1B13C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{5DB822D0-215F-46F8-A801-7ED2D0845D97} = {DED55B82-C3ED-40DE-8448-6CD41D3D5996}
 		{1A9128A7-C4B9-4147-95C5-226646F7D3CD} = {D0F0BF09-8BE8-4E24-8A4F-F85CC0A0FF92}
 		{8AD8F286-0FFE-4B8A-8E50-842627F31A62} = {D0F0BF09-8BE8-4E24-8A4F-F85CC0A0FF92}
+		{50CE79C9-9C0A-4F8E-B58E-54D737E1B13C} = {ED0BEBEA-2C74-47D6-BB33-40551FAE3B33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55516F3E-E7ED-4C88-8D51-FF73F4D89B07}

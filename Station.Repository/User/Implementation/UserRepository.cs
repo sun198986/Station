@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using ServiceReference;
+using Station.WcfAdapter;
 
 namespace Station.Repository.User.Implementation
 {
@@ -9,11 +10,10 @@ namespace Station.Repository.User.Implementation
     public class UserRepository:IUserRepository
     {
         private readonly UserClient _userClient;
-        public UserRepository()
+        public UserRepository(IWcfAdapter wcfAdapter)
         {
-            _userClient = WcfAdapter.WcfAdapterUtil.GetWcfClient<UserClient>();
+            _userClient = wcfAdapter.GetUserClient();
         }
-
 
         public async Task<UserInfo> Login(string userName, string pwd)
         {

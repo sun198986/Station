@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 using ServiceReference;
+using Station.WcfAdapter;
 
 namespace Station.Aop.Filter
 {
     public class CustomerAuthorizeFilterAttribute: Attribute,IAsyncAuthorizationFilter, IFilterMetadata
     {
         private readonly IApplicationContext _applicationContext;
+        private readonly IWcfAdapter _wcfAdapter;
 
-        public CustomerAuthorizeFilterAttribute(IApplicationContext applicationContext)
+        public CustomerAuthorizeFilterAttribute(IApplicationContext applicationContext,IWcfAdapter wcfAdapter)
         {
             _applicationContext = applicationContext;
+            _wcfAdapter = wcfAdapter;
         }
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
@@ -27,7 +28,7 @@ namespace Station.Aop.Filter
                 string myToken = context.HttpContext.Request.Headers["token"];
                 if (!string.IsNullOrEmpty(myToken))
                 {
-                    TokenClient tokenClient = WcfAdapter.WcfAdapterUtil.GetWcfClient<TokenClient>();
+                    TokenClient tokenClient = _wcfAdapter.GetTokenClient();
                     //验证令牌
                     try
                     {

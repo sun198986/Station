@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using ServiceReference;
+using Station.WcfAdapter;
 
 namespace Station.Repository.Token.Implementation
 {
@@ -10,9 +11,9 @@ namespace Station.Repository.Token.Implementation
     public class TokenRepository:ITokenRepository
     {
         private readonly TokenClient _tokenClient;
-        public TokenRepository()
+        public TokenRepository(IWcfAdapter wcfAdapter)
         {
-            _tokenClient = WcfAdapter.WcfAdapterUtil.GetWcfClient<TokenClient>();
+            _tokenClient = wcfAdapter.GetTokenClient();
         }
 
         public async Task<string> GetToken(string userName, DateTime startDateTime, DateTime endDateTime)

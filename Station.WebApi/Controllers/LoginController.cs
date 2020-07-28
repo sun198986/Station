@@ -26,19 +26,21 @@ namespace Station.WebApi.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public async Task<IActionResult> Login(UserDto user)
+        public async Task<IActionResult> Login(UserDtoParameter user)
         {
             UserInfo userInfo = await _userRepository.Login(user.UserName, user.Password);
+            UserDto returnUserDto = new UserDto();
+            
             if (userInfo?.UserName != null && userInfo.Status == UserInfo.StatusType.正常)
             {
                 string myToken = await _tokenRepository.GetToken(userInfo.UserName, DateTime.Now, DateTime.Now.AddDays(1));
                 HttpContext.Session.SetString(myToken,JsonSerializer.Serialize(userInfo));
-                user.MyToken = myToken;
-                user.LoginResult = true;
+                returnUserDto.MyToken = myToken;
+                returnUserDto.LoginResult = true;
             }
             else
             {
-                user.LoginResult = false;
+                returnUserDto.LoginResult = false;
             }
 
             return Ok(user);

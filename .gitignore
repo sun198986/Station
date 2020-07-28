@@ -29,3 +29,5 @@
 /Station.NLog/bin/Debug/netcoreapp3.1
 /Station.NLog/obj/Release/netcoreapp3.1
 /Station.NLog/obj/Debug/netcoreapp3.1
+/Station.AppSettings/bin/Debug/netcoreapp3.1
+/Station.AppSettings/obj
