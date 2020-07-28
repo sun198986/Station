@@ -13,38 +13,9 @@ namespace Station.Repository.RepositoryPattern.SortApply
     [ServiceDescriptor(typeof(IPropertyMappingService), ServiceLifetime.Transient)]
     public class PropertyMappingService : IPropertyMappingService
     {
-        private readonly Dictionary<string, PropertyMappingValue> _registPropertyMapping =
-            new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
-            {
-                {"RegistId",new PropertyMappingValue(new List<string>{"RegistId"})},
-                {"RegistDate",new PropertyMappingValue(new List<string>{"RegistDate"})},
-                {"MaintainNumber",new PropertyMappingValue(new List<string>{"MaintainNumber"})},
-                {"CustomName",new PropertyMappingValue(new List<string>{"CustomName"})},
-                {"Address",new PropertyMappingValue(new List<string>{"Address"})},
-                {"Linkman",new PropertyMappingValue(new List<string>{"Linkman"})},
-                {"TelPhone",new PropertyMappingValue(new List<string>{"Phone"})},
-                {"Fax",new PropertyMappingValue(new List<string>{"Fax"})}
-            };
-
-        private readonly Dictionary<string, PropertyMappingValue> _employeePropertyMapping =
-            new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
-            {
-                {"EmployeeId",new PropertyMappingValue(new List<string>{"EmployeeId"})},
-                {"EmployeeName",new PropertyMappingValue(new List<string>{"EmployeeName"})},
-                {"RegistId",new PropertyMappingValue(new List<string>{"RegistId"})}
-            };
-
-        private readonly IList<IPropertyMapping> _propertyMappings = new List<IPropertyMapping>();
-
-
-        public PropertyMappingService()
-        {
-            _propertyMappings.Add(new PropertyMapping<RegistDto, Regist>(_registPropertyMapping));
-            _propertyMappings.Add(new PropertyMapping<EmployeeDto,Entity.DB2Admin.Employee>(_employeePropertyMapping));
-        }
         public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>()
         {
-            var matchingMapping = _propertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
+            var matchingMapping = PropertyMappingConfig.PropertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
             if (matchingMapping.Count() == 1)
             {
                 return matchingMapping.First().MappingDictionary;

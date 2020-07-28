@@ -63,6 +63,11 @@ namespace Station.WebApi.Controllers
 
             if (employeeDtoParameter.OrderBy != null)
             {
+                if (!_propertyMappingService.ValidMappingExistsFor<EmployeeDto, Employee>(employeeDtoParameter.OrderBy))
+                {
+                    return BadRequest("无法找到对应的属性");
+                }
+
                 mappingDictionary = _propertyMappingService.GetPropertyMapping<EmployeeDto, Employee>();
             }
 

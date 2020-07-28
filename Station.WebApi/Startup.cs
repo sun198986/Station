@@ -18,6 +18,7 @@ using Station.Aop.Filter;
 using Station.AppSettings;
 using Station.EFCore.IbmDb;
 using Station.ETag;
+using Station.Repository.RepositoryPattern.SortApply;
 using Station.Swagger;
 using Station.WcfAdapter;
 
@@ -46,6 +47,8 @@ namespace Station.WebApi
             services.InitSwaggerConfig();
             //Etag 缓存
             services.InitEtagConfig();
+            //预加载排序的对应关系
+            services.InitPropertyMappingConfig();
 
             services.Configure<Settings>(options =>
             {

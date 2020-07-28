@@ -62,7 +62,6 @@ namespace Station.WebApi.Controllers
             if (registDtoP.Search != null)
             {
                 var entity = _mapper.Map<Regist>(registDtoP.Search);
-                //Expression<Func<Regist, bool>> expression = m=>m.Phone=="123";
                 expression = entity.AsExpression();
             }
 
@@ -70,6 +69,10 @@ namespace Station.WebApi.Controllers
 
             if (registDtoP.OrderBy != null)
             {
+                if (!_propertyMappingService.ValidMappingExistsFor<RegistDto, Regist>(registDtoP.OrderBy))
+                {
+                    return BadRequest("无法找到对应的属性");
+                }
                 mappingDictionary = _propertyMappingService.GetPropertyMapping<RegistDto, Regist>();
             }
 

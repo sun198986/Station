@@ -89,25 +89,6 @@ namespace Station.Repository.RepositoryPattern.Implementation
                 .Where(p => ids.Contains(typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().TrimEnd())).ToListAsync();
         }
 
-        /// <summary>
-        /// 根据Id的集合异步获取所有entity
-        /// </summary>
-        /// <param name="ids"></param>
-        /// <param name="sort">排序</param>
-        /// <returns></returns>
-        public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Sort sort)
-        {
-            if (!ids.Any())
-            {
-                throw new ArgumentNullException(nameof(ids));
-            }
-
-            var result = _dbSet.AsQueryable().Where(p => ids.Contains(typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().TrimEnd()));
-            if (sort == null) return await result.ToListAsync();
-            if (string.IsNullOrEmpty(sort.OrderByField)) return await result.ToListAsync();
-            if (sort.OrderBy) return await result.OrderBy(sort.OrderByField).ToListAsync();
-            return await result.OrderByDescending(sort.OrderByField).ToListAsync();
-        }
 
         public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter)
         {
@@ -124,7 +105,7 @@ namespace Station.Repository.RepositoryPattern.Implementation
 
         public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter, string orderBy, Dictionary<string, PropertyMappingValue> propertyMapping)
         {
-            if (filter == null && ids == null)
+            if (filter == null && ids == null&& orderBy==null)
                 return await _dbSet.ToListAsync();
             IQueryable<T> result = null;
             if (ids != null)
@@ -132,7 +113,7 @@ namespace Station.Repository.RepositoryPattern.Implementation
             if (filter != null)
                 result = result == null ? _dbSet.Where(filter) : result.Where(filter);
             if (orderBy != null)
-                result = result.ApplySort(orderBy, propertyMapping);
+                result = result == null? _dbSet.ApplySort(orderBy, propertyMapping):result.ApplySort(orderBy, propertyMapping);
 
             return await result.ToListAsync();
         }
@@ -149,26 +130,6 @@ namespace Station.Repository.RepositoryPattern.Implementation
                 return await _dbSet.ToListAsync();
             return await _dbSet.Where(filter).ToListAsync();
         }
-
-
-        /// <summary>
-        /// 根据条件异步获取entity集合
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="sort">排序</param>
-        /// <returns></returns>
-        public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, Sort sort)
-        {
-            if (filter == null)
-                return await _dbSet.ToListAsync();
-            var result = _dbSet.Where(filter);
-            if (sort == null) return await result.ToListAsync();
-            if (string.IsNullOrEmpty(sort.OrderByField)) return await result.ToListAsync();
-            if (sort.OrderBy) return await result.OrderBy(sort.OrderByField).ToListAsync();
-            return await result.OrderByDescending(sort.OrderByField).ToListAsync();
-        }
-
-
 
         /// <summary>
         /// 根据条件异步分页查询集合
