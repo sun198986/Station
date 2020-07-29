@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-namespace Station.Repository.RepositoryPattern.SortApply
+namespace Station.SortApply.Helper
 {
     public static class QueryableExtensions
     {

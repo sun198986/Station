@@ -1,4 +1,4 @@
-﻿namespace Station.Repository.RepositoryPattern.SortApply
+﻿namespace Station.SortApply.Helper
 {
     public interface IPropertyChckerService
     {

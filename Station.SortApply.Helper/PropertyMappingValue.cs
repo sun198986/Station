@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Station.Repository.RepositoryPattern.SortApply
+namespace Station.SortApply.Helper
 {
     public class PropertyMappingValue
     {

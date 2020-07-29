@@ -10,8 +10,8 @@ using Station.Entity.DB2Admin;
 using Station.Helper;
 using Station.Models.RegistDto;
 using Station.Repository.RepositoryPattern;
-using Station.Repository.RepositoryPattern.SortApply;
 using Station.Repository.StaionRegist;
+using Station.SortApply.Helper;
 
 namespace Station.WebApi.Controllers
 {
@@ -69,11 +69,11 @@ namespace Station.WebApi.Controllers
 
             if (registDtoP.OrderBy != null)
             {
-                if (!_propertyMappingService.ValidMappingExistsFor<RegistDto, Regist>(registDtoP.OrderBy))
+                if (!_propertyMappingService.ValidMappingExistsFor<RegistDto, Regist>(PropertyMappingConfig.PropertyMappings, registDtoP.OrderBy))
                 {
                     return BadRequest("无法找到对应的属性");
                 }
-                mappingDictionary = _propertyMappingService.GetPropertyMapping<RegistDto, Regist>();
+                mappingDictionary = _propertyMappingService.GetPropertyMapping<RegistDto, Regist>(PropertyMappingConfig.PropertyMappings);
             }
 
             var entities = await _registRepository.GetAsync(registDtoP.Ids, expression,registDtoP.OrderBy,mappingDictionary);

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Station.Repository.RepositoryPattern.SortApply
+namespace Station.SortApply.Helper
 {
     public class PropertyChckerService : IPropertyChckerService
     {

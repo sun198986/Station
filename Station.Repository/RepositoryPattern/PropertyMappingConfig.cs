@@ -4,8 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Station.Entity.DB2Admin;
 using Station.Models.EmployeeDto;
 using Station.Models.RegistDto;
+using Station.SortApply.Helper;
 
-namespace Station.Repository.RepositoryPattern.SortApply
+namespace Station.Repository.RepositoryPattern
 {
     public static class PropertyMappingConfig
     {

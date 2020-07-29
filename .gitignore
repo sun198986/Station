@@ -32,3 +32,5 @@
 /Station.AppSettings/bin/Debug/netcoreapp3.1
 /Station.AppSettings/obj
 /Station.Core/bin/Debug/netcoreapp3.1
+/Station.SortApply.Helper/bin/Debug/netcoreapp3.1
+/Station.SortApply.Helper/obj

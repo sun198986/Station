@@ -13,7 +13,8 @@ using System.Linq.Expressions;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Station.Models.RegistDto;
-using Station.Repository.RepositoryPattern.SortApply;
+using Station.Repository.RepositoryPattern;
+using Station.SortApply.Helper;
 
 namespace Station.WebApi.Controllers
 {
@@ -63,12 +64,12 @@ namespace Station.WebApi.Controllers
 
             if (employeeDtoParameter.OrderBy != null)
             {
-                if (!_propertyMappingService.ValidMappingExistsFor<EmployeeDto, Employee>(employeeDtoParameter.OrderBy))
+                if (!_propertyMappingService.ValidMappingExistsFor<EmployeeDto, Employee>(PropertyMappingConfig.PropertyMappings,employeeDtoParameter.OrderBy))
                 {
                     return BadRequest("无法找到对应的属性");
                 }
 
-                mappingDictionary = _propertyMappingService.GetPropertyMapping<EmployeeDto, Employee>();
+                mappingDictionary = _propertyMappingService.GetPropertyMapping<EmployeeDto, Employee>(PropertyMappingConfig.PropertyMappings);
             }
 
             var entities = await _employeeRepository.GetAsync(employeeDtoParameter.Ids, expression, employeeDtoParameter.OrderBy, mappingDictionary);

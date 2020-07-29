@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Station.Repository.RepositoryPattern.SortApply;
+using Station.SortApply.Helper;
 
 namespace Station.Repository.RepositoryPattern
 {

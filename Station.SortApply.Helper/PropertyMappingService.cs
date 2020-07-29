@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
-using Station.Entity.DB2Admin;
-using Station.Models.EmployeeDto;
-using Station.Models.RegistDto;
-using Station.Repository.Employee;
 
-namespace Station.Repository.RepositoryPattern.SortApply
+namespace Station.SortApply.Helper
 {
     [ServiceDescriptor(typeof(IPropertyMappingService), ServiceLifetime.Transient)]
     public class PropertyMappingService : IPropertyMappingService
     {
-        public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>()
+        public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>(IList<IPropertyMapping> propertyMappings)
         {
-            var matchingMapping = PropertyMappingConfig.PropertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
+            var matchingMapping = propertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
             if (matchingMapping.Count() == 1)
             {
                 return matchingMapping.First().MappingDictionary;
@@ -23,9 +19,9 @@ namespace Station.Repository.RepositoryPattern.SortApply
             throw new Exception($"无法找到唯一的依赖关系:{typeof(TSource)},{typeof(TDestination)}");
         }
 
-        public bool ValidMappingExistsFor<TSource, TDestination>(string fields)
+        public bool ValidMappingExistsFor<TSource, TDestination>(IList<IPropertyMapping> propertyMappings, string fields)
         {
-            var propertyMapping = GetPropertyMapping <TSource, TDestination> ();
+            var propertyMapping = GetPropertyMapping <TSource, TDestination> (propertyMappings);
             if (string.IsNullOrWhiteSpace(fields))
                 return true;
 

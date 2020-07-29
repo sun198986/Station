@@ -20,8 +20,8 @@ using Station.EFCore.IbmDb;
 using Station.Core.ETag;
 using Station.Core.Exception;
 using Station.Core.Filter;
-using Station.Repository.RepositoryPattern.SortApply;
 using Station.Core.Swagger;
+using Station.Repository.RepositoryPattern;
 using Station.WcfAdapter;
 
 namespace Station.WebApi
@@ -101,7 +101,7 @@ namespace Station.WebApi
                 }).UseLoggerFactory(ConsoleLoggerFactory);//打印sql脚本
             });
 
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("Station.Repository"))
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("Station.Repository"), Assembly.Load("Station.SortApply.Helper"))
                .AddClasses().UsingAttributes());//程序集注入
             services.AddScoped<IApplicationContext, ApplicationContext>();
             services.AddScoped<IWcfAdapter, WcfAdapter.WcfAdapter>();

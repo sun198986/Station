@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.Core", "Station.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Station.AppSettings", "Station.AppSettings\Station.AppSettings.csproj", "{770A08AE-4A70-4F24-A372-27EA82318682}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Station.SortApply.Helper", "Station.SortApply.Helper\Station.SortApply.Helper.csproj", "{D995BC92-4821-4059-B258-271688913AED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{770A08AE-4A70-4F24-A372-27EA82318682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{770A08AE-4A70-4F24-A372-27EA82318682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{770A08AE-4A70-4F24-A372-27EA82318682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D995BC92-4821-4059-B258-271688913AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D995BC92-4821-4059-B258-271688913AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D995BC92-4821-4059-B258-271688913AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D995BC92-4821-4059-B258-271688913AED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{5DB822D0-215F-46F8-A801-7ED2D0845D97} = {DED55B82-C3ED-40DE-8448-6CD41D3D5996}
 		{14B4E664-8199-4DC4-8824-2B3BCE3CFD83} = {D0F0BF09-8BE8-4E24-8A4F-F85CC0A0FF92}
 		{770A08AE-4A70-4F24-A372-27EA82318682} = {ED0BEBEA-2C74-47D6-BB33-40551FAE3B33}
+		{D995BC92-4821-4059-B258-271688913AED} = {93CA8232-7166-4AE7-B055-55CE08B2307B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55516F3E-E7ED-4C88-8D51-FF73F4D89B07}

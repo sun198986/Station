@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Station.Core;
 using Station.Entity.DB2AdminPattern;
 using Station.Helper;
-using Station.Repository.RepositoryPattern.SortApply;
+using Station.SortApply.Helper;
 
-namespace Station.Repository.RepositoryPattern.Implementation
+namespace Station.Repository.RepositoryPattern
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
