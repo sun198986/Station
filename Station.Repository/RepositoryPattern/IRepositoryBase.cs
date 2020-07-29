@@ -24,8 +24,6 @@ namespace Station.Repository.RepositoryPattern
 
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter);
 
-        Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, Pagination pagination);
-
         int Count(Expression<Func<T, bool>> filter);
 
         Task<int> CountAsync(Expression<Func<T, bool>> filter);

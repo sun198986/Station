@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Station.Core;
 using Station.Entity.DB2AdminPattern;
-using Station.Helper;
 using Station.SortApply.Helper;
 
 namespace Station.Repository.RepositoryPattern
@@ -74,7 +73,7 @@ namespace Station.Repository.RepositoryPattern
 
 
         /// <summary>
-        /// 根据Id的集合异步获取所有entity
+        /// 根据Id的集合异步获取数据
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
@@ -88,7 +87,12 @@ namespace Station.Repository.RepositoryPattern
                 .Where(p => ids.Contains(typeof(T).GetProperty(typeof(T).Name + "Id").GetValue(p).ToString().TrimEnd())).ToListAsync();
         }
 
-
+        /// <summary>
+        /// 根据id集合和查询条件获取数据
+        /// </summary>
+        /// <param name="ids">id集合</param>
+        /// <param name="filter">查询条件</param>
+        /// <returns></returns>
         public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter)
         {
             if (filter == null && ids == null)
@@ -102,6 +106,14 @@ namespace Station.Repository.RepositoryPattern
             return await result.ToListAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <param name="filter"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="propertyMapping"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter, string orderBy, Dictionary<string, PropertyMappingValue> propertyMapping)
         {
             if (filter == null && ids == null&& orderBy==null)
@@ -128,28 +140,6 @@ namespace Station.Repository.RepositoryPattern
             if (filter == null)
                 return await _dbSet.ToListAsync();
             return await _dbSet.Where(filter).ToListAsync();
-        }
-
-        /// <summary>
-        /// 根据条件异步分页查询集合
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="pagination"></param>
-        /// <returns></returns>
-        public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, Pagination pagination)
-        {
-            pagination.RecordCount = await CountAsync(filter);
-            var result = filter != null ? Get().Where(filter) : Get();
-            if (pagination.OrderBy != null || pagination.OrderByDescending != null)
-            {
-                result = pagination.OrderBy != null ? result.OrderBy(pagination.OrderBy) : result.OrderByDescending(pagination.OrderByDescending);
-
-                if (pagination.ThenBy != null || pagination.ThenByDescending != null)
-                {
-                    result = pagination.ThenBy != null ? (result as IOrderedQueryable<T>).ThenBy(pagination.ThenBy) : (result as IOrderedQueryable<T>).ThenByDescending(pagination.ThenByDescending);
-                }
-            }
-            return await result.Skip(pagination.PageIndex * pagination.PageSize).Take(pagination.PageSize).ToListAsync();
         }
 
         #endregion

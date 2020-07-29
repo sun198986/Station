@@ -69,11 +69,11 @@ namespace Station.WebApi.Controllers
 
             if (registDtoP.OrderBy != null)
             {
-                if (!_propertyMappingService.ValidMappingExistsFor<RegistDto, Regist>(PropertyMappingConfig.PropertyMappings, registDtoP.OrderBy))
+                if (!_propertyMappingService.ValidMappingExistsFor<RegistDto, Regist>(registDtoP.OrderBy))
                 {
                     return BadRequest("无法找到对应的属性");
                 }
-                mappingDictionary = _propertyMappingService.GetPropertyMapping<RegistDto, Regist>(PropertyMappingConfig.PropertyMappings);
+                mappingDictionary = _propertyMappingService.GetPropertyMapping<RegistDto, Regist>();
             }
 
             var entities = await _registRepository.GetAsync(registDtoP.Ids, expression,registDtoP.OrderBy,mappingDictionary);

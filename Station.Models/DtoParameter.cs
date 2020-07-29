@@ -4,7 +4,7 @@ using Station.Helper;
 
 namespace Station.Models
 {
-    public class DtoParameter
+    public abstract class DtoParameter
     {
         public string Fields { get; set; }
 

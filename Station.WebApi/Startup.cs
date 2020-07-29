@@ -22,6 +22,7 @@ using Station.Core.Exception;
 using Station.Core.Filter;
 using Station.Core.Swagger;
 using Station.Repository.RepositoryPattern;
+using Station.SortApply.Helper;
 using Station.WcfAdapter;
 
 namespace Station.WebApi
@@ -49,8 +50,6 @@ namespace Station.WebApi
             services.InitSwaggerConfig();
             //Etag 缓存
             services.InitEtagConfig();
-            //预加载排序的对应关系
-            services.InitPropertyMappingConfig();
 
             services.Configure<Settings>(options =>
             {
@@ -105,6 +104,7 @@ namespace Station.WebApi
                .AddClasses().UsingAttributes());//程序集注入
             services.AddScoped<IApplicationContext, ApplicationContext>();
             services.AddScoped<IWcfAdapter, WcfAdapter.WcfAdapter>();
+            services.AddScoped<PropertyMappingCollection>();
 
             services.AddAutoMapper(config =>
             {

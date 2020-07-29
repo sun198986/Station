@@ -9,9 +9,15 @@ namespace Station.SortApply.Helper
     [ServiceDescriptor(typeof(IPropertyMappingService), ServiceLifetime.Transient)]
     public class PropertyMappingService : IPropertyMappingService
     {
-        public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>(IList<IPropertyMapping> propertyMappings)
+        private readonly PropertyMappingCollection _propertyMappingCollection;
+
+        public PropertyMappingService(PropertyMappingCollection propertyMappingCollection)
         {
-            var matchingMapping = propertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
+            _propertyMappingCollection = propertyMappingCollection;
+        }
+        public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>()
+        {
+            var matchingMapping = _propertyMappingCollection.PropertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
             if (matchingMapping.Count() == 1)
             {
                 return matchingMapping.First().MappingDictionary;
@@ -19,9 +25,9 @@ namespace Station.SortApply.Helper
             throw new Exception($"无法找到唯一的依赖关系:{typeof(TSource)},{typeof(TDestination)}");
         }
 
-        public bool ValidMappingExistsFor<TSource, TDestination>(IList<IPropertyMapping> propertyMappings, string fields)
+        public bool ValidMappingExistsFor<TSource, TDestination>(string fields)
         {
-            var propertyMapping = GetPropertyMapping <TSource, TDestination> (propertyMappings);
+            var propertyMapping = GetPropertyMapping <TSource, TDestination> ();
             if (string.IsNullOrWhiteSpace(fields))
                 return true;
 

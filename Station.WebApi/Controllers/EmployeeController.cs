@@ -64,12 +64,12 @@ namespace Station.WebApi.Controllers
 
             if (employeeDtoParameter.OrderBy != null)
             {
-                if (!_propertyMappingService.ValidMappingExistsFor<EmployeeDto, Employee>(PropertyMappingConfig.PropertyMappings,employeeDtoParameter.OrderBy))
+                if (!_propertyMappingService.ValidMappingExistsFor<EmployeeDto, Employee>(employeeDtoParameter.OrderBy))
                 {
                     return BadRequest("无法找到对应的属性");
                 }
 
-                mappingDictionary = _propertyMappingService.GetPropertyMapping<EmployeeDto, Employee>(PropertyMappingConfig.PropertyMappings);
+                mappingDictionary = _propertyMappingService.GetPropertyMapping<EmployeeDto, Employee>();
             }
 
             var entities = await _employeeRepository.GetAsync(employeeDtoParameter.Ids, expression, employeeDtoParameter.OrderBy, mappingDictionary);

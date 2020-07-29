@@ -16,11 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Station.Core\Station.Core.csproj" />
-    <ProjectReference Include="..\Station.Helper\Station.Helper.csproj" />
-    <ProjectReference Include="..\Station.Models\Station.Models.csproj" />
     <ProjectReference Include="..\Station.Repository\Station.Repository.csproj" />
-    <ProjectReference Include="..\Station.WcfAdapter\Station.WcfAdapter.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
