@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using System;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System;
 
-namespace Station.Aop.Filter
+namespace Station.Core.Filter
 {
     public class CustomerResultFilterAttribute:ResultFilterAttribute
     {

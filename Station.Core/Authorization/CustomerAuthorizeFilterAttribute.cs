@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using ServiceReference;
 using Station.WcfAdapter;
 
-namespace Station.Aop.Filter
+namespace Station.Core.Authorization
 {
     public class CustomerAuthorizeFilterAttribute: Attribute,IAsyncAuthorizationFilter, IFilterMetadata
     {
@@ -37,7 +37,7 @@ namespace Station.Aop.Filter
                         _applicationContext.CurrentUser =
                             System.Text.Json.JsonSerializer.Deserialize<UserInfo>(currentUser);
                     }
-                    catch (Exception e)
+                    catch (System.Exception e)
                     {
                         context.Result = new UnauthorizedObjectResult(e.Message);
                     }

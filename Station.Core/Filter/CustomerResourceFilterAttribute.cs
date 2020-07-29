@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Station.Aop.Filter
+namespace Station.Core.Filter
 {
     /// <summary>
     /// 缓存

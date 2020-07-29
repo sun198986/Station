@@ -5,13 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
-using Station.Aop;
-using Station.Aop.Filter;
+using Station.Core;
 using Station.EFCore.IbmDb;
 using Station.Entity.DB2Admin;
-using Station.Entity.DB2AdminPattern;
-using Station.Repository.Employee;
-using Station.Repository.RepositoryPattern;
 using Station.Repository.RepositoryPattern.Implementation;
 
 namespace Station.Repository.StaionRegist.Implementation

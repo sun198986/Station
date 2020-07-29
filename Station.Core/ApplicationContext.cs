@@ -1,6 +1,6 @@
 ﻿using ServiceReference;
 
-namespace Station.Aop
+namespace Station.Core
 {
 
     public class ApplicationContext:IApplicationContext

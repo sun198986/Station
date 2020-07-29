@@ -16,14 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Station.Aop\Station.Aop.csproj" />
-    <ProjectReference Include="..\Station.AppSettings\Station.AppSettings.csproj" />
-    <ProjectReference Include="..\Station.ETag\Station.ETag.csproj" />
+    <ProjectReference Include="..\Station.Core\Station.Core.csproj" />
     <ProjectReference Include="..\Station.Helper\Station.Helper.csproj" />
     <ProjectReference Include="..\Station.Models\Station.Models.csproj" />
-    <ProjectReference Include="..\Station.NLog\Station.NLog.csproj" />
     <ProjectReference Include="..\Station.Repository\Station.Repository.csproj" />
-    <ProjectReference Include="..\Station.Swagger\Station.Swagger.csproj" />
     <ProjectReference Include="..\Station.WcfAdapter\Station.WcfAdapter.csproj" />
   </ItemGroup>
 

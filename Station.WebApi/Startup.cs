@@ -13,13 +13,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using Station.Aop;
-using Station.Aop.Filter;
 using Station.AppSettings;
+using Station.Core;
+using Station.Core.Authorization;
 using Station.EFCore.IbmDb;
-using Station.ETag;
+using Station.Core.ETag;
+using Station.Core.Exception;
+using Station.Core.Filter;
 using Station.Repository.RepositoryPattern.SortApply;
-using Station.Swagger;
+using Station.Core.Swagger;
 using Station.WcfAdapter;
 
 namespace Station.WebApi

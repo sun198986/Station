@@ -1,7 +1,7 @@
 ﻿using Marvin.Cache.Headers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Station.ETag
+namespace Station.Core.ETag
 {
     public static class ETagConfig
     {

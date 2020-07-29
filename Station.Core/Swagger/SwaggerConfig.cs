@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 
-namespace Station.Swagger
+namespace Station.Core.Swagger
 {
     public static class SwaggerConfig
     {

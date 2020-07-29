@@ -1,0 +1,15 @@
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\Station.Core.deps.json
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\Station.Core.dll
+E:\MyProject\Station\Station.Core\obj\Debug\netcoreapp3.1\Station.Core.AssemblyInfoInputs.cache
+E:\MyProject\Station\Station.Core\obj\Debug\netcoreapp3.1\Station.Core.AssemblyInfo.cs
+E:\MyProject\Station\Station.Core\obj\Debug\netcoreapp3.1\Station.Core.csprojAssemblyReference.cache
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\NLog.config
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\Station.Core.pdb
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\Station.AppSettings.dll
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\Station.WcfAdapter.dll
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\Station.WcfAdapter.pdb
+E:\MyProject\Station\Station.Core\bin\Debug\netcoreapp3.1\Station.AppSettings.pdb
+E:\MyProject\Station\Station.Core\obj\Debug\netcoreapp3.1\Station.Core.csproj.CoreCompileInputs.cache
+E:\MyProject\Station\Station.Core\obj\Debug\netcoreapp3.1\Station.Core.csproj.CopyComplete
+E:\MyProject\Station\Station.Core\obj\Debug\netcoreapp3.1\Station.Core.dll
+E:\MyProject\Station\Station.Core\obj\Debug\netcoreapp3.1\Station.Core.pdb
