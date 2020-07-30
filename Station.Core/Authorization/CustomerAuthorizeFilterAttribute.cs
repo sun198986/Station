@@ -2,20 +2,19 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ServiceReference;
-using Station.WcfAdapter;
+using IUserRoleControl = Station.Core.UserRoleWcf.IUserRoleControl;
 
 namespace Station.Core.Authorization
 {
     public class CustomerAuthorizeFilterAttribute: Attribute,IAsyncAuthorizationFilter, IFilterMetadata
     {
         private readonly IApplicationContext _applicationContext;
-        private readonly IWcfAdapter _wcfAdapter;
+        private readonly IUserRoleControl _wcfAdapter;
 
-        public CustomerAuthorizeFilterAttribute(IApplicationContext applicationContext,IWcfAdapter wcfAdapter)
+        public CustomerAuthorizeFilterAttribute(IApplicationContext applicationContext,IUserRoleControl wcfAdapter)
         {
             _applicationContext = applicationContext;
             _wcfAdapter = wcfAdapter;
@@ -33,9 +32,7 @@ namespace Station.Core.Authorization
                     try
                     {
                         await tokenClient.ValidateGuidAsync(myToken);
-                        string currentUser = context.HttpContext.Session.GetString(myToken);
-                        _applicationContext.CurrentUser =
-                            System.Text.Json.JsonSerializer.Deserialize<UserInfo>(currentUser);
+                        _applicationContext.SetCurrentUserLogInfo(myToken);
                     }
                     catch (System.Exception e)
                     {

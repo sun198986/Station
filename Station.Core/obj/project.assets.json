@@ -2060,26 +2060,12 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
-      "Station.AppSettings/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "3.1.5"
-        },
-        "compile": {
-          "bin/placeholder/Station.AppSettings.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Station.AppSettings.dll": {}
-        }
-      },
       "Station.WcfAdapter/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.Extensions.Logging.Console": "5.0.0-preview.5.20278.1",
-          "Station.AppSettings": "1.0.0",
           "System.ServiceModel.Duplex": "4.4.0",
           "System.ServiceModel.Http": "4.4.0",
           "System.ServiceModel.NetTcp": "4.4.0",
@@ -6752,11 +6738,6 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
-    },
-    "Station.AppSettings/1.0.0": {
-      "type": "project",
-      "path": "../Station.AppSettings/Station.AppSettings.csproj",
-      "msbuildProject": "../Station.AppSettings/Station.AppSettings.csproj"
     },
     "Station.WcfAdapter/1.0.0": {
       "type": "project",

@@ -14,17 +14,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using Station.AppSettings;
 using Station.Core;
+using Station.Core.AppSettings;
 using Station.Core.Authorization;
 using Station.EFCore.IbmDb;
 using Station.Core.ETag;
 using Station.Core.Exception;
 using Station.Core.Filter;
+using Station.Core.Http;
 using Station.Core.Swagger;
-using Station.Repository.RepositoryPattern;
+using Station.Core.UserRoleWcf;
 using Station.SortApply.Helper;
-using Station.WcfAdapter;
 
 namespace Station.WebApi
 {
@@ -101,7 +101,7 @@ namespace Station.WebApi
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("Station.Repository"), Assembly.Load("Station.SortApply.Helper"))
                .AddClasses().UsingAttributes());//³ÌÐò¼¯×¢Èë
             services.AddScoped<IApplicationContext, ApplicationContext>();
-            services.AddScoped<IWcfAdapter, WcfAdapter.WcfAdapter>();
+            services.AddScoped<IUserRoleControl, Core.UserRoleWcf.UserRoleControl>();
             services.AddScoped<PropertyMappingCollection>();
 
             services.AddAutoMapper(config =>
@@ -116,7 +116,10 @@ namespace Station.WebApi
                 newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
             });
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            services.AddSession(config =>
+            {
+                config.IdleTimeout = TimeSpan.FromDays(1);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,7 +131,10 @@ namespace Station.WebApi
             }
 
             app.UserSwaggerConfig();
-           
+
+            AppHttpContext.Configure(app.ApplicationServices.
+                GetRequiredService<Microsoft.AspNetCore.Http.IHttpContextAccessor>());
+
             app.UseHttpCacheHeaders();
 
             app.UseSession();

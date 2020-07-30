@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Station.Helper
+namespace Station.Helper.Extensions
 {
     public class ArrayModelBinder: IModelBinder
     {

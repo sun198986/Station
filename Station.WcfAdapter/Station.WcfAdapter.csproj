@@ -17,12 +17,4 @@
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interface\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Station.AppSettings\Station.AppSettings.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference;
+using Station.Core.Login;
 using Station.Models.UserDto;
 using Station.Repository.Token;
 using Station.Repository.User;
@@ -34,7 +35,8 @@ namespace Station.WebApi.Controllers
             if (userInfo?.UserName != null && userInfo.Status == UserInfo.StatusType.正常)
             {
                 string myToken = await _tokenRepository.GetToken(userInfo.UserName, DateTime.Now, DateTime.Now.AddDays(1));
-                HttpContext.Session.SetString(myToken,JsonSerializer.Serialize(userInfo));
+
+                HttpContext.Session.SetString(myToken,JsonSerializer.Serialize(new HttpRequestLogUserModel(userInfo)));
                 returnUserDto.MyToken = myToken;
                 returnUserDto.LoginResult = true;
             }
@@ -43,7 +45,7 @@ namespace Station.WebApi.Controllers
                 returnUserDto.LoginResult = false;
             }
 
-            return Ok(user);
+            return Ok(returnUserDto);
         }
     }
 }

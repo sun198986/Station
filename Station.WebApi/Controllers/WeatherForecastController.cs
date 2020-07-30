@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Station.Entity.DB2Admin;
 using Station.Helper;
+using Station.Helper.Extensions;
 using Station.Models.RegistDto;
 
 namespace Station.WebApi.Controllers

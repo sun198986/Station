@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using ServiceReference;
+using Station.Core.UserRoleWcf;
 using Station.WcfAdapter;
 
 namespace Station.Repository.User.Implementation
@@ -10,7 +11,7 @@ namespace Station.Repository.User.Implementation
     public class UserRepository:IUserRepository
     {
         private readonly UserClient _userClient;
-        public UserRepository(IWcfAdapter wcfAdapter)
+        public UserRepository(IUserRoleControl wcfAdapter)
         {
             _userClient = wcfAdapter.GetUserClient();
         }

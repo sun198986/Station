@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.Options;
 using ServiceReference;
-using Station.AppSettings;
+using Station.Core.AppSettings;
+using Station.WcfAdapter;
 
-namespace Station.WcfAdapter
+namespace Station.Core.UserRoleWcf
 {
-    public class WcfAdapter:IWcfAdapter
+    public class UserRoleControl:Core.UserRoleWcf.IUserRoleControl
     {
         private readonly IOptions<Settings> _settings;
-        public WcfAdapter(IOptions<Settings> settings)
+        public UserRoleControl(IOptions<Settings> settings)
         {
             _settings = settings;
             

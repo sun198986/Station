@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
-namespace Station.Helper
+namespace Station.Helper.Extensions
 {
     public static class EnumerableExtensions
     {

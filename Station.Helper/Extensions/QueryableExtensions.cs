@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
-namespace Station.Helper
+namespace Station.Helper.Extensions
 {
     public static class QueryableExtensions
     {

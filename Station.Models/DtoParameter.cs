@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Station.Helper;
+using Station.Helper.Extensions;
 
 namespace Station.Models
 {

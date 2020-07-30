@@ -116,7 +116,7 @@ namespace Station.Repository.RepositoryPattern
         /// <returns></returns>
         public async Task<IEnumerable<T>> GetAsync(IEnumerable<string> ids, Expression<Func<T, bool>> filter, string orderBy, Dictionary<string, PropertyMappingValue> propertyMapping)
         {
-            if (filter == null && ids == null&& orderBy==null)
+            if (filter == null && ids == null && orderBy == null)
                 return await _dbSet.ToListAsync();
             IQueryable<T> result = null;
             if (ids != null)
@@ -124,7 +124,7 @@ namespace Station.Repository.RepositoryPattern
             if (filter != null)
                 result = result == null ? _dbSet.Where(filter) : result.Where(filter);
             if (orderBy != null)
-                result = result == null? _dbSet.ApplySort(orderBy, propertyMapping):result.ApplySort(orderBy, propertyMapping);
+                result = result == null ? _dbSet.ApplySort(orderBy, propertyMapping) : result.ApplySort(orderBy, propertyMapping);
 
             return await result.ToListAsync();
         }
@@ -181,12 +181,12 @@ namespace Station.Repository.RepositoryPattern
             entity.GetType().GetProperty(typeof(T).Name + "Id")?.SetValue(entity, Guid.NewGuid().ToString());
             if (entity is EditorEntity editor)
             {
-                if (_applicationContext.CurrentUser != null)
+                if (_applicationContext.CurrentUserLogInfo != null && _applicationContext.CurrentUserLogInfo.CurrentUserInfo != null)
                 {
                     editor.CreateDate = DateTime.Now.Date;
                     editor.UpdateDate = DateTime.Now.Date;
-                    editor.Creator = _applicationContext.CurrentUser.UserName;
-                    editor.Updater = _applicationContext.CurrentUser.UserName;
+                    editor.Creator = _applicationContext.CurrentUserLogInfo.CurrentUserInfo.UserName;
+                    editor.Updater = _applicationContext.CurrentUserLogInfo.CurrentUserInfo.UserName;
                 }
             }
 
@@ -205,12 +205,12 @@ namespace Station.Repository.RepositoryPattern
                 entity.GetType().GetProperty(typeof(T).Name + "Id")?.SetValue(entity, Guid.NewGuid().ToString());
                 if (entity is EditorEntity editor)
                 {
-                    if (_applicationContext.CurrentUser != null)
+                    if (_applicationContext.CurrentUserLogInfo != null && _applicationContext.CurrentUserLogInfo.CurrentUserInfo != null)
                     {
                         editor.CreateDate = DateTime.Now.Date;
                         editor.UpdateDate = DateTime.Now.Date;
-                        editor.Creator = _applicationContext.CurrentUser.UserName;
-                        editor.Updater = _applicationContext.CurrentUser.UserName;
+                        editor.Creator = _applicationContext.CurrentUserLogInfo.CurrentUserInfo.UserName;
+                        editor.Updater = _applicationContext.CurrentUserLogInfo.CurrentUserInfo.UserName;
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Station.Helper;
+using Station.Helper.Extensions;
 using Station.Models.RegistDto;
 
 namespace Station.Models.EmployeeDto

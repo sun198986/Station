@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Reflection;
 
-namespace Station.Helper
+namespace Station.Helper.Extensions
 {
     public static class ObjectExtensions
     {
@@ -42,6 +42,56 @@ namespace Station.Helper
             }
 
             return expandoObj;
+        }
+
+        public static bool ToBool(this object obj)
+        {
+            return ConvertHelper.ObjToBool(obj);
+        }
+
+        public static DateTime? ToDateNull(this object obj)
+        {
+            return ConvertHelper.ObjToDateNull(obj);
+        }
+
+        public static decimal ToDecimal(this object obj)
+        {
+            return ConvertHelper.ObjToDecimal(obj);
+        }
+
+        public static decimal? ToDecimalNull(this object obj)
+        {
+            return ConvertHelper.ObjToDecimalNull(obj);
+        }
+
+        public static int ToInt(this object obj)
+        {
+            return ConvertHelper.ObjToInt(obj);
+        }
+
+        public static int? ToIntNull(this object obj)
+        {
+            return ConvertHelper.ObjToIntNull(obj);
+        }
+
+
+        public static string ToStr(this object obj)
+        {
+            return ConvertHelper.ObjToStr(obj);
+        }
+        /// <summary>
+        /// 将对象转换为string
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ToJson(this object obj)
+        {
+            if (obj != null)
+            {
+                return JsonHelper.ToJson(obj);
+            }
+            return "";
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using Microsoft.AspNetCore.Http.Internal;
 
-namespace Station.Helper
+namespace Station.Helper.Extensions
 {
     public static class EntityExtensions
     {

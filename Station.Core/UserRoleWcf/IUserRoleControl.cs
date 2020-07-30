@@ -1,8 +1,8 @@
 ﻿using ServiceReference;
 
-namespace Station.WcfAdapter
+namespace Station.Core.UserRoleWcf
 {
-    public interface IWcfAdapter
+    public interface IUserRoleControl
     {
         //tokenClient
         TokenClient GetTokenClient();
