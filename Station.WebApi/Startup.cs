@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
@@ -51,10 +52,7 @@ namespace Station.WebApi
             //Etag »º´æ
             services.InitEtagConfig();
 
-            services.Configure<Settings>(options =>
-            {
-                options.WcfUrl = Configuration.GetSection("Setting:WcfUrl").Value;
-            });
+            services.Configure<Settings>(Configuration.GetSection("Settings"));
 
             services.AddControllers(options =>
             {
@@ -130,7 +128,6 @@ namespace Station.WebApi
             }
 
             app.UserSwaggerConfig();
-            //app.UseResponseCaching();
            
             app.UseHttpCacheHeaders();
 
